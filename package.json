@@ -1,0 +1,28 @@
+{
+    "name": "sonus",
+    "version": "1.0.0",
+    "description": "",
+    "main": "index.js",
+    "scripts": {
+        "dev:client": "pnpm --filter client run dev",
+        "dev:server": "pnpm --filter server run dev",
+        "dev": "pnpm -r --parallel run dev",
+        "build:client": "pnpm --filter client run build",
+        "build:server": "pnpm --filter server run build",
+        "build": "pnpm -r run build",
+        "start:client": "pnpm --filter client run preview",
+        "start:server": "pnpm --filter server run start",
+        "format": "prettier --write .",
+        "prepare": "husky"
+    },
+    "keywords": [],
+    "author": "",
+    "license": "ISC",
+    "packageManager": "pnpm@10.12.1",
+    "devDependencies": {
+        "eslint": "^10.1.0",
+        "husky": "^9.1.7",
+        "lint-staged": "^16.4.0",
+        "prettier": "^3.8.1"
+    }
+}

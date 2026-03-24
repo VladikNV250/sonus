@@ -1,0 +1,39 @@
+name: Continuous Integration
+
+on:
+    push:
+        branches: [main, dev]
+    pull_request:
+        branches: [main, dev]
+
+jobs:
+    build-and-test:
+        runs-on: ubuntu-latest
+
+        steps:
+            - name: Checkout code
+              uses: actions/checkout@v4
+            - name: Setup pnpm
+              uses: pnpm/action-setup@v3
+              with:
+                  version: 10
+
+            - name: Setup Node.js
+              uses: actions/setup-node@v4
+              with:
+                  node-version: '22'
+                  cache: 'pnpm'
+
+            - name: Install dependencies
+              run: pnpm install --frozen-lockfile
+
+            - name: Lint & Typecheck
+              run: |
+                  pnpm -r lint 
+                  pnpm -r typecheck
+
+            - name: Run Tests
+              run: pnpm -r test
+
+            - name: Build
+              run: pnpm -r run build
