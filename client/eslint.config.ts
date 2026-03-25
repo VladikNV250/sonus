@@ -13,7 +13,7 @@ import tseslint from 'typescript-eslint'
 
 export default defineConfig([
     {
-        ignores: ['dist/**', '.react-router/**', '**/__generated__/**'],
+        ignores: ['eslint.config.ts', 'dist/**', '.react-router/**', '**/__generated__/**'],
     },
     {
         files: ['**/*.{ts,tsx}'],
