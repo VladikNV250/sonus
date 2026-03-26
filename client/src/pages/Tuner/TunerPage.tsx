@@ -1,4 +1,4 @@
-import { type FC, useRef, useState } from 'react'
+import { type FC, useEffect, useRef, useState } from 'react'
 
 import { initGuitarInput, pitchProcessorUrl } from '@/core'
 
@@ -8,6 +8,18 @@ const TunerPage: FC = () => {
     const [frequency, setFrequency] = useState(0)
 
     const [isStarted, setIsStarted] = useState(false)
+
+    useEffect(() => {
+        return () => {
+            if (pitchProcessorRef.current) {
+                pitchProcessorRef.current.port.onmessage = null
+                pitchProcessorRef.current.disconnect()
+            }
+            if (audioContextRef.current) {
+                void audioContextRef.current.close()
+            }
+        }
+    }, [])
 
     const handleInitAudio = async () => {
         if (isStarted) return
