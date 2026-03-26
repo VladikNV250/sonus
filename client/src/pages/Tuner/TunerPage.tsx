@@ -5,6 +5,7 @@ import { initGuitarInput, pitchProcessorUrl } from '@/core'
 const TunerPage: FC = () => {
     const audioContextRef = useRef<AudioContext | null>(null)
     const pitchProcessorRef = useRef<AudioWorkletNode | null>(null)
+    const [frequency, setFrequency] = useState(0)
 
     const [isStarted, setIsStarted] = useState(false)
 
@@ -27,6 +28,14 @@ const TunerPage: FC = () => {
 
             const pitchProcessorNode = new AudioWorkletNode(audioContext, 'pitch-processor')
             pitchProcessorRef.current = pitchProcessorNode
+
+            pitchProcessorNode.port.onmessage = (event) => {
+                const { type, frequency } = event.data as { type: string; frequency: number }
+
+                if (type === 'frequency') {
+                    setFrequency(frequency)
+                }
+            }
 
             guitarSource?.connect(pitchProcessorNode)
 
@@ -51,6 +60,9 @@ const TunerPage: FC = () => {
                 >
                     {isStarted ? 'Listening...' : 'Start'}
                 </button>
+            </div>
+            <div className="flex justify-center">
+                <p className="text-2xl font-bold text-blue-900">{frequency.toFixed(2)}</p>
             </div>
         </main>
     )
