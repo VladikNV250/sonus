@@ -62,7 +62,7 @@ const TunerPage: FC = () => {
                 </button>
             </div>
             <div className="flex justify-center">
-                <p className="text-2xl font-bold text-blue-900">{frequency.toFixed(2)}</p>
+                <p className="text-2xl font-bold text-blue-900">{frequency.toFixed(1)} Hz</p>
             </div>
         </main>
     )
