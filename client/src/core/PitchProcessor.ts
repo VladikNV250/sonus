@@ -29,7 +29,7 @@ class PitchProcessor extends AudioWorkletProcessor {
         // Used in YIN algorithm to store differences between samples
         this.differences = new Float32Array(this.bufferSize / 2)
         this.framesFilled = 0
-        this.sampleRate = 48000
+        this.sampleRate = sampleRate
     }
 
     process(
@@ -84,10 +84,8 @@ class PitchProcessor extends AudioWorkletProcessor {
         // Step 3: Find the best lag corresponding to the fundamental period
         const bestLag = this.findBestLag()
 
-        if (bestLag === -1) return 0
-
-        if (bestLag === 0 || bestLag === halfBufferSize - 1) {
-            return sampleRate / bestLag
+        if (bestLag <= 0 || bestLag >= halfBufferSize - 1) {
+            return 0
         }
 
         // Step 4: Fine-tune the result using parabolic interpolation for sub-sample accuracy
@@ -135,7 +133,9 @@ class PitchProcessor extends AudioWorkletProcessor {
         for (let lag = 1; lag < this.differences.length; lag++) {
             runningSum += this.differences[lag]
 
-            this.differences[lag] = this.differences[lag] * (lag / runningSum)
+            if (runningSum > 0) {
+                this.differences[lag] = this.differences[lag] * (lag / runningSum)
+            }
         }
     }
 
