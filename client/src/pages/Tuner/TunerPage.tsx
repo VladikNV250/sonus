@@ -33,7 +33,11 @@ const TunerPage: FC = () => {
                         </p>
 
                         <p className="text-2xl font-bold text-blue-900">
-                            {pitchData.cents < 0 ? 'Tune Up' : 'Tune Down'}
+                            {pitchData.cents === 0
+                                ? 'Perfect'
+                                : pitchData.cents < 0
+                                  ? 'Tune Up'
+                                  : 'Tune Down'}
                         </p>
                     </div>
                 </div>

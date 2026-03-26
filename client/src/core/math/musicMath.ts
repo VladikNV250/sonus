@@ -1,7 +1,7 @@
 import { NOTES } from '../tuning'
 
 export const getPitchData = (frequency: number) => {
-    if (frequency === 0) return null
+    if (!Number.isFinite(frequency) || frequency <= 0) return null
 
     const floatMidiNote = 12 * Math.log2(frequency / 440) + 69
 
