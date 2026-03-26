@@ -1,0 +1,1 @@
+export { initGuitarInput } from './initGuitarInput'
