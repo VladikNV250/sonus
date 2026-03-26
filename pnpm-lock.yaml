@@ -48,6 +48,9 @@ importers:
       '@tailwindcss/vite':
         specifier: ^4.2.2
         version: 4.2.2(vite@7.3.1(@types/node@22.19.15)(jiti@2.6.1)(lightningcss@1.32.0)(tsx@4.21.0)(yaml@2.8.3))
+      '@types/audioworklet':
+        specifier: ^0.0.97
+        version: 0.0.97
       '@types/eslint-plugin-jsx-a11y':
         specifier: ^6.10.1
         version: 6.10.1(jiti@2.6.1)
@@ -774,6 +777,9 @@ packages:
     resolution: {integrity: sha512-mEiF5HO1QqCLXoNEfXVA1Tzo+cYsrqV7w9Juj2wdUFyW07JRenqMG225MvPwr3ZD9N1bFQj46X7r33iHxLUW0w==}
     peerDependencies:
       vite: ^5.2.0 || ^6 || ^7 || ^8
+
+  '@types/audioworklet@0.0.97':
+    resolution: {integrity: sha512-z4RRI9147KXm3b1U4dR/XFfsxSR5yymEWEJT+Td0tCJyRkyGccIXEL09W7c5TcbDd51qKR/+LrO2SPC1SL2RLA==}
 
   '@types/chai@5.2.3':
     resolution: {integrity: sha512-Mw558oeA9fFbv65/y4mHtXDs9bPnFMZAL/jxdPFUpOHHIXX91mcgEHbS5Lahr+pwZFR8A7GQleRWeI6cGFC2UA==}
@@ -3206,6 +3212,8 @@ snapshots:
       '@tailwindcss/oxide': 4.2.2
       tailwindcss: 4.2.2
       vite: 7.3.1(@types/node@22.19.15)(jiti@2.6.1)(lightningcss@1.32.0)(tsx@4.21.0)(yaml@2.8.3)
+
+  '@types/audioworklet@0.0.97': {}
 
   '@types/chai@5.2.3':
     dependencies:
