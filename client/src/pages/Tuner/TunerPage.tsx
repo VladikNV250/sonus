@@ -14,7 +14,7 @@ const TunerPage: FC = () => {
                 <h1 className="text-4xl font-bold text-center text-blue-900 mb-8">Sonus</h1>
                 <div className="flex items-start gap-4">
                     <button
-                        onClick={() => setMode(mode === 'auto' ? 'manual' : 'auto')}
+                        onClick={() => setMode('auto')}
                         className={cn(
                             'rounded px-6 py-2 font-bold text-white transition-colors cursor-pointer',
                             mode === 'auto'
@@ -26,7 +26,7 @@ const TunerPage: FC = () => {
                     </button>
                     <div className="space-y-2">
                         <button
-                            onClick={() => setMode(mode === 'auto' ? 'manual' : 'auto')}
+                            onClick={() => setMode('manual')}
                             className={cn(
                                 'rounded px-6 py-2 font-bold text-white transition-colors cursor-pointer',
                                 mode === 'manual'
@@ -36,28 +36,30 @@ const TunerPage: FC = () => {
                         >
                             Manual
                         </button>
-                        <div className="flex items-center justify-between">
-                            <select
-                                value={targetPitch?.note}
-                                onChange={(e) => changeTargetPitch(e, 'note')}
-                            >
-                                {NOTES.map((note) => (
-                                    <option key={note} value={note}>
-                                        {note}
-                                    </option>
-                                ))}
-                            </select>
-                            <select
-                                value={targetPitch?.octave}
-                                onChange={(e) => changeTargetPitch(e, 'octave')}
-                            >
-                                {Array.from({ length: 7 }, (_, i) => (
-                                    <option key={i} value={i}>
-                                        {i}
-                                    </option>
-                                ))}
-                            </select>
-                        </div>
+                        {mode === 'manual' && (
+                            <div className="flex items-center justify-between">
+                                <select
+                                    value={targetPitch?.note}
+                                    onChange={(e) => changeTargetPitch(e, 'note')}
+                                >
+                                    {NOTES.map((note) => (
+                                        <option key={note} value={note}>
+                                            {note}
+                                        </option>
+                                    ))}
+                                </select>
+                                <select
+                                    value={targetPitch?.octave}
+                                    onChange={(e) => changeTargetPitch(e, 'octave')}
+                                >
+                                    {Array.from({ length: 7 }, (_, i) => (
+                                        <option key={i} value={i}>
+                                            {i}
+                                        </option>
+                                    ))}
+                                </select>
+                            </div>
+                        )}
                     </div>
                 </div>
             </header>

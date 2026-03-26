@@ -6,6 +6,7 @@ export const getPitchData = (frequency: number, targetMidiNote?: number): PitchD
     const floatMidiNote = 12 * Math.log2(frequency / 440) + 69
 
     const midiNote = targetMidiNote ?? Math.round(floatMidiNote)
+    if (!Number.isInteger(midiNote) || midiNote < 0 || midiNote > 127) return null
 
     const note = NOTES[midiNote % 12]
     const octave = Math.floor(midiNote / 12) - 1
