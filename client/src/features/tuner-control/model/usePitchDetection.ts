@@ -38,6 +38,10 @@ export const usePitchDetection = () => {
             await audioContext.audioWorklet.addModule(pitchProcessorUrl)
             const guitarSource = await initGuitarInput(audioContext)
 
+            if (!guitarSource) {
+                throw new Error('Failed to access microphone')
+            }
+
             const pitchProcessorNode = new AudioWorkletNode(audioContext, 'pitch-processor')
             pitchProcessorRef.current = pitchProcessorNode
 
@@ -50,7 +54,7 @@ export const usePitchDetection = () => {
                 }
             }
 
-            guitarSource?.connect(pitchProcessorNode)
+            guitarSource.connect(pitchProcessorNode)
 
             setIsStarted(true)
         } catch (error) {
