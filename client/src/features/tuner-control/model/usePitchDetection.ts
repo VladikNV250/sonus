@@ -1,8 +1,17 @@
-import { useEffect, useRef, useState } from 'react'
+import { type ChangeEvent, useEffect, useRef, useState } from 'react'
 
-import { getPitchData, initGuitarInput, type PitchData, pitchProcessorUrl } from '@/core'
+import {
+    getMidiNoteFromName,
+    getPitchData,
+    initGuitarInput,
+    type Note,
+    type PitchData,
+    pitchProcessorUrl,
+} from '@/core'
 
 export const usePitchDetection = () => {
+    const [mode, setMode] = useState<'auto' | 'manual'>('auto')
+    const [targetPitch, setTargetPitch] = useState<{ note: Note; octave: number } | null>(null)
     const audioContextRef = useRef<AudioContext | null>(null)
     const pitchProcessorRef = useRef<AudioWorkletNode | null>(null)
     const [pitchData, setPitchData] = useState<PitchData | null>(null)
@@ -20,6 +29,36 @@ export const usePitchDetection = () => {
             }
         }
     }, [])
+
+    useEffect(() => {
+        if (!pitchProcessorRef.current) return
+
+        pitchProcessorRef.current.port.onmessage = (event) => {
+            const { type, frequency } = event.data as { type: string; frequency: number }
+
+            if (type === 'frequency') {
+                if (mode === 'manual' && targetPitch) {
+                    const midiNote = getMidiNoteFromName(targetPitch.note, targetPitch.octave)
+
+                    const pitchData = getPitchData(frequency, midiNote)
+                    setPitchData(pitchData)
+                } else {
+                    const pitchData = getPitchData(frequency)
+                    setPitchData(pitchData)
+                }
+            }
+        }
+    }, [mode, targetPitch, isStarted])
+
+    const changeTargetPitch = (event: ChangeEvent<HTMLSelectElement>, type: 'note' | 'octave') => {
+        if (type === 'note') {
+            const note = event.target.value as Note
+            setTargetPitch((prev) => ({ note, octave: prev?.octave ?? 4 }))
+        } else {
+            const octave = Number(event.target.value)
+            setTargetPitch((prev) => ({ note: prev?.note ?? 'E', octave }))
+        }
+    }
 
     const startDetection = async () => {
         if (isStarted) return
@@ -45,15 +84,6 @@ export const usePitchDetection = () => {
             const pitchProcessorNode = new AudioWorkletNode(audioContext, 'pitch-processor')
             pitchProcessorRef.current = pitchProcessorNode
 
-            pitchProcessorNode.port.onmessage = (event) => {
-                const { type, frequency } = event.data as { type: string; frequency: number }
-
-                if (type === 'frequency') {
-                    const pitchData = getPitchData(frequency)
-                    setPitchData(pitchData)
-                }
-            }
-
             guitarSource.connect(pitchProcessorNode)
 
             setIsStarted(true)
@@ -66,5 +96,9 @@ export const usePitchDetection = () => {
         pitchData,
         isStarted,
         startDetection,
+        mode,
+        setMode,
+        targetPitch,
+        changeTargetPitch,
     }
 }
