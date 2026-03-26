@@ -37,15 +37,34 @@ export const usePitchDetection = () => {
             const { type, frequency } = event.data as { type: string; frequency: number }
 
             if (type === 'frequency') {
-                if (mode === 'manual' && targetPitch) {
-                    const midiNote = getMidiNoteFromName(targetPitch.note, targetPitch.octave)
+                const midiNote =
+                    targetPitch && mode === 'manual'
+                        ? getMidiNoteFromName(targetPitch.note, targetPitch.octave)
+                        : undefined
 
-                    const pitchData = getPitchData(frequency, midiNote)
-                    setPitchData(pitchData)
-                } else {
-                    const pitchData = getPitchData(frequency)
-                    setPitchData(pitchData)
-                }
+                const rawPitchData = getPitchData(frequency, midiNote)
+
+                if (!rawPitchData) return
+
+                setPitchData((prevData) => {
+                    if (!prevData) return rawPitchData
+
+                    if (
+                        rawPitchData.note !== prevData.note ||
+                        rawPitchData.octave !== prevData.octave
+                    ) {
+                        return rawPitchData
+                    }
+
+                    const ALPHA = 0.2
+
+                    const smoothedCents = rawPitchData.cents * ALPHA + prevData.cents * (1 - ALPHA)
+
+                    return {
+                        ...rawPitchData,
+                        cents: Math.round(smoothedCents),
+                    }
+                })
             }
         }
     }, [mode, targetPitch, isStarted])
