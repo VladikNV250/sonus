@@ -1,5 +1,5 @@
 export { initGuitarInput } from './audio-input'
-export { getPitchData } from './math'
+export { getMidiNoteFromName, getPitchData } from './math'
 export type { Note, PitchData } from './tuning'
 export { NOTES } from './tuning'
 export { pitchProcessorUrl } from './worklets'

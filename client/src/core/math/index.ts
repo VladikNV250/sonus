@@ -1,1 +1,1 @@
-export { getPitchData } from './musicMath'
+export { getMidiNoteFromName, getPitchData } from './musicMath'
