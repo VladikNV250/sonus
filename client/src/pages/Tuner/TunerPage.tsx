@@ -1,7 +1,59 @@
-import type { FC } from 'react'
+import { type FC, useRef, useState } from 'react'
+
+import { initGuitarInput, pitchProcessorUrl } from '@/core'
 
 const TunerPage: FC = () => {
-    return <div>TunerPage</div>
+    const audioContextRef = useRef<AudioContext | null>(null)
+    const pitchProcessorRef = useRef<AudioWorkletNode | null>(null)
+
+    const [isStarted, setIsStarted] = useState(false)
+
+    const handleInitAudio = async () => {
+        if (isStarted) return
+
+        try {
+            if (!audioContextRef.current) {
+                audioContextRef.current = new window.AudioContext()
+            }
+
+            const audioContext = audioContextRef.current
+
+            if (audioContext.state === 'suspended') {
+                await audioContext.resume()
+            }
+
+            await audioContext.audioWorklet.addModule(pitchProcessorUrl)
+            const guitarSource = await initGuitarInput(audioContext)
+
+            const pitchProcessorNode = new AudioWorkletNode(audioContext, 'pitch-processor')
+            pitchProcessorRef.current = pitchProcessorNode
+
+            guitarSource?.connect(pitchProcessorNode)
+
+            setIsStarted(true)
+        } catch (error) {
+            console.error('❌ Failed to initialize audio pipeline:', error)
+        }
+    }
+
+    return (
+        <main className="p-32 h-screen w-screen bg-blue-50">
+            <h1 className="text-4xl font-bold text-center text-blue-900 mb-8">Pesun Guitar</h1>
+            <div className="flex justify-center mb-4">
+                <button
+                    className={`rounded px-6 py-2 font-bold text-white transition-colors ${
+                        isStarted
+                            ? 'bg-gray-400 cursor-not-allowed'
+                            : 'bg-red-500 hover:bg-red-600 cursor-pointer'
+                    }`}
+                    onClick={() => void handleInitAudio()}
+                    disabled={isStarted}
+                >
+                    {isStarted ? 'Listening...' : 'Start'}
+                </button>
+            </div>
+        </main>
+    )
 }
 
 export default TunerPage
