@@ -1,0 +1,1 @@
+export { getGlowColor } from './getGlowColor'

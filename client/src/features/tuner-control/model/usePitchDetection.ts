@@ -1,13 +1,7 @@
 import { type ChangeEvent, useEffect, useRef, useState } from 'react'
 
-import {
-    getMidiNoteFromName,
-    getPitchData,
-    initGuitarInput,
-    type Note,
-    type PitchData,
-    pitchProcessorUrl,
-} from '@/core'
+import { getMidiNoteFromName, getPitchData, initGuitarInput, pitchProcessorUrl } from '@/core'
+import type { Note, PitchData } from '@/entities/pitch'
 
 export const usePitchDetection = () => {
     const [mode, setMode] = useState<'auto' | 'manual'>('auto')
@@ -17,6 +11,8 @@ export const usePitchDetection = () => {
     const [pitchData, setPitchData] = useState<PitchData | null>(null)
 
     const [isStarted, setIsStarted] = useState(false)
+
+    const isPerfect = pitchData?.cents === 0
 
     useEffect(() => {
         return () => {
@@ -114,6 +110,7 @@ export const usePitchDetection = () => {
     return {
         pitchData,
         isStarted,
+        isPerfect,
         startDetection,
         mode,
         setMode,

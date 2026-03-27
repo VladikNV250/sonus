@@ -1,4 +1,4 @@
-import { type Note, NOTES, type PitchData } from '../tuning'
+import { type Note, NOTES, type PitchData } from '@/entities/pitch'
 
 export const getPitchData = (frequency: number, targetMidiNote?: number): PitchData | null => {
     if (!Number.isFinite(frequency) || frequency <= 0) return null
