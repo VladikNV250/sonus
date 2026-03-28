@@ -9,16 +9,8 @@ import {
 import { ListeningLoader } from './ListeningLoader'
 
 export const TunerBoard = () => {
-    const {
-        pitchData,
-        isStarted,
-        isPerfect,
-        startDetection,
-        mode,
-        setMode,
-        targetPitch,
-        changeTargetPitch,
-    } = usePitchDetection()
+    const { pitchData, mode, setMode, targetPitch, changeTargetPitch, isPerfect } =
+        usePitchDetection()
 
     return (
         <>
@@ -45,7 +37,7 @@ export const TunerBoard = () => {
                 <TuningModeToggle mode={mode} setMode={setMode} />
             </section>
 
-            <StartListeningScreen isStarted={isStarted} onStart={() => void startDetection()} />
+            <StartListeningScreen />
         </>
     )
 }

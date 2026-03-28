@@ -1,4 +1,4 @@
-import { type Note, NOTES, type PitchData } from '@/entities/pitch'
+import { NOTES, type Pitch, type PitchData } from '@/entities/pitch'
 
 export const getPitchData = (frequency: number, targetMidiNote?: number): PitchData | null => {
     if (!Number.isFinite(frequency) || frequency <= 0) return null
@@ -15,11 +15,11 @@ export const getPitchData = (frequency: number, targetMidiNote?: number): PitchD
     return { note, octave, cents }
 }
 
-export const getMidiNoteFromName = (noteName: Note, octave: number): number => {
-    const noteIndex = NOTES.indexOf(noteName)
+export const getMidiNoteFromName = (pitch: Pitch): number => {
+    const noteIndex = NOTES.indexOf(pitch.note)
     if (noteIndex === -1) {
-        throw new Error(`Invalid note name: ${noteName}`)
+        throw new Error(`Invalid note name: ${pitch.note}`)
     }
 
-    return (octave + 1) * 12 + noteIndex
+    return (pitch.octave + 1) * 12 + noteIndex
 }

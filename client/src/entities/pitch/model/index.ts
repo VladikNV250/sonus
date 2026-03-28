@@ -1,1 +1,1 @@
-export type { Note, PitchData } from './types'
+export type { Note, Pitch, PitchData } from './types'
