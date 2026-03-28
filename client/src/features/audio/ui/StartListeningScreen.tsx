@@ -1,11 +1,14 @@
 import { Mic } from 'lucide-react'
 import type { FC } from 'react'
 
-import { useAudioContext } from '@/features/audio'
 import { Button, GlassPanel } from '@/shared/ui'
 
-export const StartListeningScreen: FC = () => {
-    const { isStarted, start } = useAudioContext()
+interface Props {
+    isStarted: boolean
+    start: () => Promise<void>
+}
+
+export const StartListeningScreen: FC<Props> = ({ isStarted, start }) => {
     if (isStarted) return null
 
     return (

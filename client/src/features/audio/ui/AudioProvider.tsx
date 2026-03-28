@@ -3,6 +3,7 @@ import { type ReactNode, useCallback, useEffect, useRef, useState } from 'react'
 import { initGuitarInput, pitchProcessorUrl } from '@/core'
 
 import { AudioContext } from '../model'
+import { StartListeningScreen } from './StartListeningScreen'
 
 export const AudioProvider = ({ children }: { children: ReactNode }) => {
     const [isStarted, setIsStarted] = useState(false)
@@ -72,8 +73,9 @@ export const AudioProvider = ({ children }: { children: ReactNode }) => {
     }
 
     return (
-        <AudioContext.Provider value={{ isStarted, subscribeToFrequency, start }}>
+        <AudioContext.Provider value={{ subscribeToFrequency }}>
             {children}
+            <StartListeningScreen isStarted={isStarted} start={start} />
         </AudioContext.Provider>
     )
 }

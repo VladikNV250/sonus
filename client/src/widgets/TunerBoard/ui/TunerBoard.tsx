@@ -1,10 +1,5 @@
 import { NoteDisplay, PitchIndicator, TunerBackground } from '@/entities/pitch'
-import {
-    ManualTargetSelector,
-    StartListeningScreen,
-    TuningModeToggle,
-    usePitchDetection,
-} from '@/features/tuner-control'
+import { ManualTargetSelector, TuningModeToggle, usePitchDetection } from '@/features/tuner-control'
 
 import { ListeningLoader } from './ListeningLoader'
 
@@ -36,8 +31,6 @@ export const TunerBoard = () => {
 
                 <TuningModeToggle mode={mode} setMode={setMode} />
             </section>
-
-            <StartListeningScreen />
         </>
     )
 }
