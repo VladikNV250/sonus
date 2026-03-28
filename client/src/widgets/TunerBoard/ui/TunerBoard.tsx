@@ -1,11 +1,14 @@
 import { NoteDisplay, PitchIndicator, TunerBackground } from '@/entities/pitch'
 import { ManualTargetSelector, TuningModeToggle, usePitchDetection } from '@/features/tuner-control'
 
+import { useHapticPulse } from '../model'
 import { ListeningLoader } from './ListeningLoader'
 
 export const TunerBoard = () => {
     const { pitchData, mode, setMode, targetPitch, changeTargetPitch, isPerfect } =
         usePitchDetection()
+
+    useHapticPulse(isPerfect)
 
     return (
         <>
