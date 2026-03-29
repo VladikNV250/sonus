@@ -21,5 +21,9 @@ export const getMidiNoteFromName = (pitch: Pitch): number => {
         throw new Error(`Invalid note name: ${pitch.note}`)
     }
 
-    return (pitch.octave + 1) * 12 + noteIndex
+    const midi = (pitch.octave + 1) * 12 + noteIndex
+    if (midi < 0 || midi > 127) {
+        throw new Error(`Invalid octave for MIDI range: ${pitch.octave}`)
+    }
+    return midi
 }
