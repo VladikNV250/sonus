@@ -1,13 +1,13 @@
 import type { ChangeEvent, FC } from 'react'
 
-import { type Note, NOTES } from '@/entities/pitch'
+import { NOTES, type Pitch } from '@/entities/pitch'
 import { cn } from '@/shared/lib'
 
 // TODO: same situation as in StartListeningScreen, make it more smart
 interface Props {
     mode: 'auto' | 'manual'
-    targetPitch: { note: Note; octave: number } | null
-    changeTargetPitch: (event: ChangeEvent<HTMLSelectElement>, type: 'note' | 'octave') => void
+    targetPitch: Pitch
+    changeTargetPitch: (event: ChangeEvent<HTMLSelectElement>, type: keyof Pitch) => void
 }
 
 export const ManualTargetSelector: FC<Props> = ({ mode, targetPitch, changeTargetPitch }) => {
