@@ -3,6 +3,7 @@ import './index.css'
 import { isRouteErrorResponse, Links, Meta, Outlet, Scripts, ScrollRestoration } from 'react-router'
 
 import type { Route } from './+types/root'
+import { AudioProvider } from './features/audio'
 
 export const Layout = ({ children }: { children: React.ReactNode }) => {
     return (
@@ -23,7 +24,11 @@ export const Layout = ({ children }: { children: React.ReactNode }) => {
 }
 
 const App = () => {
-    return <Outlet />
+    return (
+        <AudioProvider>
+            <Outlet />
+        </AudioProvider>
+    )
 }
 
 export default App

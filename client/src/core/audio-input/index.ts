@@ -1,1 +1,1 @@
-export { initGuitarInput } from './initGuitarInput'
+export { initAudioInput } from './initAudioInput'

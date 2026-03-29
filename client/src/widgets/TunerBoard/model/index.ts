@@ -1,0 +1,1 @@
+export { useHapticPulse } from './useHapticPulse'
