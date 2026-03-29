@@ -1,10 +1,10 @@
-export const initGuitarInput = async (audioContext: AudioContext) => {
+export const initAudioInput = async (audioContext: AudioContext) => {
     if (audioContext.state === 'suspended') {
         await audioContext.resume()
     }
 
     try {
-        const stream = await navigator.mediaDevices.getUserMedia({
+        const audioStream = await navigator.mediaDevices.getUserMedia({
             audio: {
                 echoCancellation: false,
                 noiseSuppression: false,
@@ -12,9 +12,9 @@ export const initGuitarInput = async (audioContext: AudioContext) => {
             },
         })
 
-        const guitarSource = audioContext.createMediaStreamSource(stream)
+        const audioSource = audioContext.createMediaStreamSource(audioStream)
 
-        return guitarSource
+        return { audioSource, audioStream }
     } catch (error) {
         console.error('Error accessing media devices.', error)
     }

@@ -1,6 +1,6 @@
 import { type ReactNode, useCallback, useEffect, useRef, useState } from 'react'
 
-import { initGuitarInput, pitchProcessorUrl } from '@/core'
+import { initAudioInput, pitchProcessorUrl } from '@/core'
 
 import { AudioContext } from '../model'
 import { StartListeningScreen } from './StartListeningScreen'
@@ -8,6 +8,7 @@ import { StartListeningScreen } from './StartListeningScreen'
 export const AudioProvider = ({ children }: { children: ReactNode }) => {
     const [isStarted, setIsStarted] = useState(false)
 
+    const audioStreamRef = useRef<MediaStream | null>(null)
     const audioContextRef = useRef<AudioContext | null>(null)
     const pitchProcessorRef = useRef<AudioWorkletNode | null>(null)
     const frequencyHandlersRef = useRef(new Set<(frequency: number) => void>())
@@ -20,6 +21,9 @@ export const AudioProvider = ({ children }: { children: ReactNode }) => {
             }
             if (audioContextRef.current) {
                 void audioContextRef.current.close()
+            }
+            if (audioStreamRef.current) {
+                audioStreamRef.current.getTracks().forEach((track) => track.stop())
             }
         }
     }, [])
@@ -44,11 +48,13 @@ export const AudioProvider = ({ children }: { children: ReactNode }) => {
             }
 
             await audioContext.audioWorklet.addModule(pitchProcessorUrl)
-            const guitarSource = await initGuitarInput(audioContext)
+            const audioInput = await initAudioInput(audioContext)
 
-            if (!guitarSource) {
+            if (!audioInput) {
                 throw new Error('Failed to access microphone')
             }
+
+            audioStreamRef.current = audioInput.audioStream
 
             const pitchProcessorNode = new AudioWorkletNode(audioContext, 'pitch-processor')
             pitchProcessorRef.current = pitchProcessorNode
@@ -64,7 +70,7 @@ export const AudioProvider = ({ children }: { children: ReactNode }) => {
                 }
             }
 
-            guitarSource.connect(pitchProcessorNode)
+            audioInput.audioSource.connect(pitchProcessorNode)
 
             setIsStarted(true)
         } catch (error) {
