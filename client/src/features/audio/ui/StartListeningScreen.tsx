@@ -1,5 +1,5 @@
 import { Mic } from 'lucide-react'
-import type { FC } from 'react'
+import { type FC, useState } from 'react'
 
 import { Button, GlassPanel } from '@/shared/ui'
 
@@ -9,7 +9,18 @@ interface Props {
 }
 
 export const StartListeningScreen: FC<Props> = ({ isStarted, start }) => {
+    const [isLoading, setIsLoading] = useState(false)
+
     if (isStarted) return null
+
+    const handleStart = async () => {
+        setIsLoading(true)
+        try {
+            await start()
+        } finally {
+            setIsLoading(false)
+        }
+    }
 
     return (
         <div className="fixed inset-0 z-100 flex items-center justify-center p-6 bg-neutral-950/70 backdrop-blur-xl animate-in fade-in duration-300">
@@ -25,10 +36,11 @@ export const StartListeningScreen: FC<Props> = ({ isStarted, start }) => {
                 </p>
                 <Button
                     size="lg"
-                    onClick={() => void start()}
+                    onClick={() => void handleStart()}
+                    disabled={isLoading}
                     className="w-full shadow-blue-500/20 shadow-xl"
                 >
-                    Start Listening
+                    {isLoading ? 'Starting...' : 'Start Listening'}
                 </Button>
             </GlassPanel>
         </div>
