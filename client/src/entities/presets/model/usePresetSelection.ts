@@ -4,7 +4,7 @@ import type { Preset } from './types'
 import { usePresets } from './usePresets'
 
 export const usePresetSelection = () => {
-    const { data: presets = [], isLoading } = usePresets()
+    const { data: presets = [], isLoading, isError, error } = usePresets()
     const [selectedPresetId, setSelectedPresetId] = useState<Preset['id'] | null>(null)
 
     const selectedPreset = presets.find((p) => p.id === selectedPresetId) ?? presets.at(0) ?? null
@@ -13,6 +13,8 @@ export const usePresetSelection = () => {
         presets,
         selectedPreset,
         isLoading,
+        isError,
+        error,
         setSelectedPresetId,
     }
 }
