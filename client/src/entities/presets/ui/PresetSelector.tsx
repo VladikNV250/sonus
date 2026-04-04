@@ -12,7 +12,7 @@ export const PresetSelector: FC<Props> = ({ presets, selectedPreset, onSelectPre
     return (
         <div className="relative w-[180px]">
             <select
-                value={selectedPreset?.id || 'standard'}
+                value={selectedPreset?.id ?? presets.at(0)?.id ?? ''}
                 onChange={(e) => onSelectPreset(e.target.value)}
                 className="w-full appearance-none bg-white/5 backdrop-blur-md border border-white/10 text-white rounded-2xl px-5 py-3 text-center text-sm font-semibold outline-none focus:bg-white/10 transition-colors cursor-pointer"
             >
