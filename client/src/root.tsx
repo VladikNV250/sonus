@@ -3,6 +3,7 @@ import './index.css'
 import { isRouteErrorResponse, Links, Meta, Outlet, Scripts, ScrollRestoration } from 'react-router'
 
 import type { Route } from './+types/root'
+import { QueryProvider } from './app/providers/QueryProvider'
 import { AudioProvider } from './features/audio'
 
 export const Layout = ({ children }: { children: React.ReactNode }) => {
@@ -25,9 +26,11 @@ export const Layout = ({ children }: { children: React.ReactNode }) => {
 
 const App = () => {
     return (
-        <AudioProvider>
-            <Outlet />
-        </AudioProvider>
+        <QueryProvider>
+            <AudioProvider>
+                <Outlet />
+            </AudioProvider>
+        </QueryProvider>
     )
 }
 
