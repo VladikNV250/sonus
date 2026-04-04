@@ -5,13 +5,16 @@ import { type PitchData, smoothPitchData } from '@/entities/pitch'
 import type { Preset } from '@/entities/presets'
 import { useAudioContext } from '@/features/audio'
 
-export const useGuitarPitchDetection = (activeString: number | null, selectedPreset: Preset) => {
+export const useGuitarPitchDetection = (
+    activeString: number | null,
+    selectedPreset: Preset | null,
+) => {
     const { subscribeToFrequency } = useAudioContext()
     const [pitchData, setPitchData] = useState<PitchData | null>(null)
 
     useEffect(() => {
         return subscribeToFrequency((frequency) => {
-            if (activeString === null) {
+            if (activeString === null || selectedPreset === null) {
                 setPitchData(null)
                 return
             }
@@ -23,7 +26,7 @@ export const useGuitarPitchDetection = (activeString: number | null, selectedPre
 
             setPitchData((prevData) => smoothPitchData(rawPitchData, prevData))
         })
-    }, [activeString, selectedPreset.strings, subscribeToFrequency])
+    }, [activeString, selectedPreset, subscribeToFrequency])
 
     return pitchData
 }

@@ -1,1 +1,1 @@
-export { useGuitarTunerBoard } from './useGuitarTunerBoard'
+export { usePresetTuner } from './usePresetTuner'

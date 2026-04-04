@@ -1,21 +1,22 @@
 import { type FC } from 'react'
 
-import { type Preset, PRESETS } from '../model'
+import { type Preset } from '../model'
 
 interface Props {
-    selectedPreset: Preset
+    presets: Preset[]
+    selectedPreset: Preset | null
     onSelectPreset: (presetId: Preset['id']) => void
 }
 
-export const PresetSelector: FC<Props> = ({ selectedPreset, onSelectPreset }) => {
+export const PresetSelector: FC<Props> = ({ presets, selectedPreset, onSelectPreset }) => {
     return (
-        <div className="mt-6 w-full max-w-[200px] relative z-20 animate-in fade-in slide-in-from-top-4 duration-500">
+        <div className="relative w-[180px]">
             <select
                 value={selectedPreset?.id || 'standard'}
                 onChange={(e) => onSelectPreset(e.target.value)}
                 className="w-full appearance-none bg-white/5 backdrop-blur-md border border-white/10 text-white rounded-2xl px-5 py-3 text-center text-sm font-semibold outline-none focus:bg-white/10 transition-colors cursor-pointer"
             >
-                {PRESETS.map((preset) => (
+                {presets.map((preset) => (
                     <option key={preset.id} value={preset.id} className="bg-neutral-900 text-white">
                         {preset.name}
                     </option>

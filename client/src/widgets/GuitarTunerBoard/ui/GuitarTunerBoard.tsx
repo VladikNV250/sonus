@@ -1,47 +1,41 @@
-import { type FC } from 'react'
+import { Loader, Plus } from 'lucide-react'
+import { type FC, useState } from 'react'
 
-import guitarImage from '@/../public/guitar-headstock.png'
-import { PitchIndicator, TuningStatusBadge } from '@/entities/pitch'
-import { PresetSelector } from '@/entities/presets'
-import { StringButton } from '@/features/guitar-tuning'
+import { PresetSelector, usePresetSelection } from '@/entities/presets'
+import { CreatePresetSheet } from '@/features/add-custom-preset'
 
-import { STRING_BUTTON_POSITIONS } from '../consts'
-import { useGuitarTunerBoard } from '../model'
+import { PresetTuner } from './PresetTuner'
 
 export const GuitarTunerBoard: FC = () => {
-    const { selectedPreset, activeString, pitchData, isPerfect, selectPreset, selectString } =
-        useGuitarTunerBoard()
+    const { presets, isLoading, selectedPreset, setSelectedPresetId } = usePresetSelection()
+    const [isCreateSheetOpen, setIsCreateSheetOpen] = useState(false)
+
+    if (isLoading) return <Loader />
 
     return (
         <>
-            <div className="w-full flex justify-center">
-                <PresetSelector selectedPreset={selectedPreset} onSelectPreset={selectPreset} />
+            <div className="w-full flex mt-6 items-center justify-center gap-4">
+                <PresetSelector
+                    presets={presets}
+                    selectedPreset={selectedPreset}
+                    onSelectPreset={setSelectedPresetId}
+                />
+                <button
+                    type="button"
+                    onClick={() => setIsCreateSheetOpen(true)}
+                    aria-label="Create new preset"
+                    className="flex items-center cursor-pointer justify-center w-11 h-11 rounded-2xl bg-white/5 border border-white/10 text-white/60 hover:text-white hover:bg-white/10 hover:border-white/20 active:scale-95 transition-all duration-150"
+                >
+                    <Plus className="size-5" />
+                </button>
             </div>
 
-            <div className="flex flex-col items-center w-full mt-16">
-                <PitchIndicator cents={pitchData?.cents ?? 0} isPerfect={isPerfect} />
-                <TuningStatusBadge cents={pitchData?.cents ?? null} isPerfect={isPerfect} />
-            </div>
+            <PresetTuner key={selectedPreset?.id} selectedPreset={selectedPreset} />
 
-            <section className="flex-1 w-full max-w-sm flex items-end justify-center relative mt-6 pb-16">
-                <div className="absolute -bottom-1/10 flex flex-col items-center justify-center pointer-events-none">
-                    <img src={guitarImage} alt="Guitar" className="" />
-                </div>
-
-                <div className="w-full h-[320px] relative z-10">
-                    {selectedPreset.strings.map((pitch, index) => (
-                        <StringButton
-                            // eslint-disable-next-line react/no-array-index-key
-                            key={pitch.note + pitch.octave + index}
-                            pitch={pitch}
-                            selectedString={activeString}
-                            stringNumber={index}
-                            onSelect={() => selectString(index)}
-                            position={STRING_BUTTON_POSITIONS[index]}
-                        />
-                    ))}
-                </div>
-            </section>
+            <CreatePresetSheet
+                isOpen={isCreateSheetOpen}
+                onClose={() => setIsCreateSheetOpen(false)}
+            />
         </>
     )
 }
