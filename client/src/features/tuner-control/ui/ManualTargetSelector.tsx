@@ -1,6 +1,6 @@
 import type { ChangeEvent, FC } from 'react'
 
-import { NOTES, type Pitch } from '@/entities/pitch'
+import { NOTES, OCTAVES, type Pitch } from '@/entities/pitch'
 import { cn } from '@/shared/lib'
 
 // TODO: same situation as in StartListeningScreen, make it more smart
@@ -43,9 +43,9 @@ export const ManualTargetSelector: FC<Props> = ({ mode, targetPitch, changeTarge
                     onChange={(e) => changeTargetPitch(e, 'octave')}
                     className="w-full appearance-none bg-neutral-900/90 backdrop-blur-2xl border border-white/10 text-white rounded-2xl px-3 py-3 text-center text-sm font-bold shadow-xl outline-none cursor-pointer"
                 >
-                    {Array.from({ length: 7 }, (_, i) => (
-                        <option key={i} value={i} className="bg-neutral-900 text-white">
-                            Octave {i}
+                    {OCTAVES.map((octave) => (
+                        <option key={octave} value={octave} className="bg-neutral-900 text-white">
+                            Octave {octave}
                         </option>
                     ))}
                 </select>
