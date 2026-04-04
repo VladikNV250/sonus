@@ -13,9 +13,11 @@ export const validateCustomPreset = (preset: Omit<Preset, 'id'>): ValidationResu
     const errors: Partial<Record<keyof Omit<Preset, 'id'>, string[]>> = {}
 
     if (preset.name.trim().length < 2) errors.name = ['Name must be at least 2 characters long']
-    if (preset.strings.length !== 6) errors.strings = ['Preset must have 6 strings']
+    const stringErrors: string[] = []
+    if (preset.strings.length !== 6) stringErrors.push('Preset must have 6 strings')
     if (preset.strings.some((s) => !s.note || !s.octave))
-        errors.strings = ['All strings must have a note and octave']
+        stringErrors.push('All strings must have a note and octave')
+    if (stringErrors.length > 0) errors.strings = stringErrors
 
     return {
         isValid: Object.keys(errors).length === 0,
