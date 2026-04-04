@@ -19,8 +19,12 @@ export const validateCustomPreset = (preset: Omit<Preset, 'id'>): ValidationResu
         stringErrors.push('All strings must have a note and octave')
     if (stringErrors.length > 0) errors.strings = stringErrors
 
-    return {
-        isValid: Object.keys(errors).length === 0,
-        errors,
+    if (Object.keys(errors).length === 0) {
+        return { isValid: true }
+    } else {
+        return {
+            isValid: false,
+            errors,
+        }
     }
 }

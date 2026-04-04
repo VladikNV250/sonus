@@ -7,10 +7,12 @@ import { CreatePresetSheet } from '@/features/add-custom-preset'
 import { PresetTuner } from './PresetTuner'
 
 export const GuitarTunerBoard: FC = () => {
-    const { presets, isLoading, selectedPreset, setSelectedPresetId } = usePresetSelection()
+    const { presets, isLoading, isError, selectedPreset, setSelectedPresetId } =
+        usePresetSelection()
     const [isCreateSheetOpen, setIsCreateSheetOpen] = useState(false)
 
-    if (isLoading) return <Loader />
+    if (isLoading) return <Loader className="animate-spin" />
+    if (isError) return <p className="mt-8 text-sm text-red-300">Failed to load presets.</p>
 
     return (
         <>
@@ -30,7 +32,13 @@ export const GuitarTunerBoard: FC = () => {
                 </button>
             </div>
 
-            <PresetTuner key={selectedPreset?.id} selectedPreset={selectedPreset} />
+            {selectedPreset ? (
+                <PresetTuner key={selectedPreset.id} selectedPreset={selectedPreset} />
+            ) : (
+                <p className="mt-10 text-sm text-white/60">
+                    No presets yet. Create one to start tuning.
+                </p>
+            )}
 
             <CreatePresetSheet
                 isOpen={isCreateSheetOpen}

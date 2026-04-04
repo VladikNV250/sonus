@@ -1,5 +1,6 @@
 export class ApiClient {
-    private static BASE_URL = 'http://localhost:3001/api'
+    private static BASE_URL =
+        (import.meta.env.VITE_API_URL as string) || 'http://localhost:3001/api'
 
     static async get<T>(path: string): Promise<T> {
         const response = await fetch(`${this.BASE_URL}${path}`)

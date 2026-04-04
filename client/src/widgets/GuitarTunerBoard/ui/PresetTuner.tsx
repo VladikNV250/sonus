@@ -28,7 +28,7 @@ export const PresetTuner: FC<Props> = ({ selectedPreset }) => {
                 </div>
 
                 <div className="w-full h-[320px] relative z-10">
-                    {selectedPreset?.strings.map((pitch, index) => (
+                    {selectedPreset?.strings.slice(0, 6).map((pitch, index) => (
                         <StringButton
                             key={STRING_LABELS[index]}
                             pitch={pitch}
