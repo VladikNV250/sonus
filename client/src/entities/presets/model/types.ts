@@ -4,4 +4,5 @@ export interface Preset {
     readonly id: string
     name: string
     strings: Pitch[]
+    isCustom?: boolean
 }
