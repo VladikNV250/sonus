@@ -2,16 +2,25 @@ import { type ReactNode, useCallback, useEffect, useRef, useState } from 'react'
 
 import { initAudioInput, pitchProcessorUrl } from '@/core'
 
-import { AudioContext } from '../model'
+import { AudioContext, DebugAudioContext } from '../model'
+import { useDebugAudio } from '../model/useDebugAudio'
 import { StartListeningScreen } from './StartListeningScreen'
 
 export const AudioProvider = ({ children }: { children: ReactNode }) => {
     const [isStarted, setIsStarted] = useState(false)
 
+    const audioSourceRef = useRef<MediaStreamAudioSourceNode | null>(null)
     const audioStreamRef = useRef<MediaStream | null>(null)
-    const audioContextRef = useRef<AudioContext | null>(null)
+    const audioContextRef = useRef<globalThis.AudioContext | null>(null)
     const pitchProcessorRef = useRef<AudioWorkletNode | null>(null)
     const frequencyHandlersRef = useRef(new Set<(frequency: number) => void>())
+
+    const { isDebug, toggleDebugMode, debugFrequency, setDebugFrequency, isMuted, toggleMute } =
+        useDebugAudio({
+            audioContextRef,
+            audioSourceRef,
+            pitchProcessorRef,
+        })
 
     useEffect(() => {
         return () => {
@@ -55,6 +64,7 @@ export const AudioProvider = ({ children }: { children: ReactNode }) => {
             }
 
             audioStreamRef.current = audioInput.audioStream
+            audioSourceRef.current = audioInput.audioSource
 
             const pitchProcessorNode = new AudioWorkletNode(audioContext, 'pitch-processor')
             pitchProcessorRef.current = pitchProcessorNode
@@ -80,8 +90,19 @@ export const AudioProvider = ({ children }: { children: ReactNode }) => {
 
     return (
         <AudioContext.Provider value={{ subscribeToFrequency }}>
-            {children}
-            <StartListeningScreen isStarted={isStarted} start={start} />
+            <DebugAudioContext.Provider
+                value={{
+                    isDebug,
+                    toggleDebugMode,
+                    debugFrequency,
+                    setDebugFrequency,
+                    isMuted,
+                    toggleMute,
+                }}
+            >
+                {children}
+                <StartListeningScreen isStarted={isStarted} start={start} />
+            </DebugAudioContext.Provider>
         </AudioContext.Provider>
     )
 }
