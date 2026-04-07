@@ -18,9 +18,14 @@ export const useDebugAudio = ({
     const oscillatorRef = useRef<OscillatorNode | null>(null)
     const gainRef = useRef<GainNode | null>(null)
 
+    const checkFrequency = (value: number) => {
+        if (!Number.isFinite(value)) return 440
+        return Math.min(20000, Math.max(20, value))
+    }
+
     useEffect(() => {
         if (oscillatorRef.current) {
-            oscillatorRef.current.frequency.value = debugFrequency
+            oscillatorRef.current.frequency.value = checkFrequency(debugFrequency)
         }
     }, [debugFrequency])
 
@@ -29,6 +34,20 @@ export const useDebugAudio = ({
             gainRef.current.gain.value = isMuted ? 0 : 0.1
         }
     }, [isMuted])
+
+    useEffect(() => {
+        return () => {
+            if (oscillatorRef.current) {
+                oscillatorRef.current.disconnect()
+                oscillatorRef.current.stop()
+                oscillatorRef.current = null
+            }
+            if (gainRef.current) {
+                gainRef.current.disconnect()
+                gainRef.current = null
+            }
+        }
+    }, [])
 
     const toggleMute = () => setIsMuted((prev) => !prev)
 
@@ -46,7 +65,7 @@ export const useDebugAudio = ({
             const gain = audioContext.createGain()
 
             osc.type = 'sine'
-            osc.frequency.value = debugFrequency
+            osc.frequency.value = checkFrequency(debugFrequency)
             gain.gain.value = isMuted ? 0 : 0.1
 
             osc.connect(processor)
