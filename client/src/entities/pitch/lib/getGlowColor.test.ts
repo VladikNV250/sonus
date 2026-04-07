@@ -25,7 +25,7 @@ describe('getGlowColor', () => {
         expect(result).toBe('hsla(0, 84%, 60%, 0.10)')
     })
 
-    it('caps the devation at 50, even if it is > 50', () => {
+    it('caps the deviation at 50, even if it is > 50', () => {
         const result = getGlowColor({ note: 'A', octave: 4, cents: 80 })
         expect(result).toBe('hsla(0, 84%, 60%, 0.10)')
     })
