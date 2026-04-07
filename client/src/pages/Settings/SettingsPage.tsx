@@ -24,14 +24,26 @@ export const SettingsPage = () => {
                             icon={<Bug className="text-orange-400" size={20} />}
                             title="Debug Audio Input"
                             description="Mocks input wave"
-                            action={<Switch checked={isDebug} onChange={() => toggleDebugMode()} />}
+                            action={
+                                <Switch
+                                    ariaLabel="Toggle debug audio input"
+                                    checked={isDebug}
+                                    onChange={() => toggleDebugMode()}
+                                />
+                            }
                         />
 
                         <ListTile
                             icon={<Volume2 className="text-blue-400" size={20} />}
                             title="Oscillator Sound"
                             description="Hear the debug tone"
-                            action={<Switch checked={!isMuted} onChange={() => toggleMute()} />}
+                            action={
+                                <Switch
+                                    ariaLabel="Toggle oscillator sound"
+                                    checked={!isMuted}
+                                    onChange={() => toggleMute()}
+                                />
+                            }
                         />
 
                         <ListTile
@@ -42,6 +54,7 @@ export const SettingsPage = () => {
                             action={
                                 <input
                                     type="number"
+                                    aria-label="Debug frequency in hertz"
                                     value={debugFrequency}
                                     onChange={(e) => setDebugFrequency(Number(e.target.value))}
                                     className="w-20 bg-neutral-900/50 text-white text-right px-3 py-1.5 rounded-lg border border-white/10 outline-none focus:border-white/30 focus:bg-neutral-800 transition-colors font-medium"
