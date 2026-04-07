@@ -9,6 +9,7 @@ export const SettingsPage = () => {
 
     return (
         <div className="flex flex-col h-full bg-neutral-950 p-6 pt-12 overflow-y-auto w-full">
+            <title>Settings — Sonus</title>
             <div className="flex flex-col gap-6 max-w-md mx-auto w-full">
                 <div className="flex items-center gap-3 px-2">
                     <Settings className="text-white" size={28} />
