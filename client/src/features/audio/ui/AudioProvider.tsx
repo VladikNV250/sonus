@@ -57,6 +57,7 @@ export const AudioProvider = ({ children }: { children: ReactNode }) => {
                     autoGainControl: false,
                 },
             })
+            audioStreamRef.current = audioStream
 
             if (!audioContextRef.current) {
                 audioContextRef.current = new window.AudioContext()
@@ -71,7 +72,6 @@ export const AudioProvider = ({ children }: { children: ReactNode }) => {
             await audioContext.audioWorklet.addModule(pitchProcessorUrl)
 
             const audioSource = audioContext.createMediaStreamSource(audioStream)
-            audioStreamRef.current = audioStream
             audioSourceRef.current = audioSource
 
             const pitchProcessorNode = new AudioWorkletNode(audioContext, 'pitch-processor')
@@ -92,6 +92,12 @@ export const AudioProvider = ({ children }: { children: ReactNode }) => {
 
             setIsStarted(true)
         } catch (error) {
+            audioSourceRef.current?.disconnect()
+            audioSourceRef.current = null
+            audioStreamRef.current?.getTracks().forEach((track) => track.stop())
+            audioStreamRef.current = null
+            pitchProcessorRef.current?.disconnect()
+            pitchProcessorRef.current = null
             console.error('❌ Failed to initialize audio pipeline:', error)
         }
     }
