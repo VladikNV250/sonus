@@ -3,17 +3,24 @@ import './index.css'
 import { isRouteErrorResponse, Links, Meta, Outlet, Scripts, ScrollRestoration } from 'react-router'
 
 import type { Route } from './+types/root'
+import { QueryProvider } from './app/providers/QueryProvider'
+import { AudioProvider } from './features/audio'
 
 export const Layout = ({ children }: { children: React.ReactNode }) => {
     return (
-        <html lang="en">
+        <html lang="en" suppressHydrationWarning>
             <head>
                 <meta charSet="utf-8" />
                 <meta name="viewport" content="width=device-width, initial-scale=1" />
+                <meta name="apple-mobile-web-app-capable" content="yes" />
+                <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+                <meta name="apple-mobile-web-app-title" content="Sonus" />
+                <link rel="apple-touch-icon" href="/icons/icon-192.png" />
+                <meta name="theme-color" content="#0f0f0f" />
                 <Meta />
                 <Links />
             </head>
-            <body>
+            <body suppressHydrationWarning>
                 {children}
                 <ScrollRestoration />
                 <Scripts />
@@ -23,7 +30,13 @@ export const Layout = ({ children }: { children: React.ReactNode }) => {
 }
 
 const App = () => {
-    return <Outlet />
+    return (
+        <QueryProvider>
+            <AudioProvider>
+                <Outlet />
+            </AudioProvider>
+        </QueryProvider>
+    )
 }
 
 export default App

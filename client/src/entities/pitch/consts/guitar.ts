@@ -1,0 +1,1 @@
+export const STRING_LABELS = ['6th', '5th', '4th', '3rd', '2nd', '1st'] as const
