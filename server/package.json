@@ -6,7 +6,7 @@
     "type": "module",
     "scripts": {
         "dev": "tsx watch ./src/index.ts",
-        "build": "tsc && cp src/data/presets.json dist/data/presets.json",
+        "build": "tsc && node -e \"const fs=require('node:fs');fs.mkdirSync('dist/data',{recursive:true});fs.copyFileSync('src/data/presets.json','dist/data/presets.json')\"",
         "start": "node dist/index.js"
     },
     "keywords": [],
