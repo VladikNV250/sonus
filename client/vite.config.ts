@@ -19,8 +19,6 @@ export default defineConfig({
             workbox: {
                 globPatterns: ['**/*.{js,css,html,ico,png,svg,woff2}'],
 
-                additionalManifestEntries: [{ url: '/audio-processor.js', revision: null }],
-
                 runtimeCaching: [
                     {
                         urlPattern: /\/api\//,
