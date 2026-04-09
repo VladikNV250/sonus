@@ -1,6 +1,6 @@
 import { type ReactNode, useCallback, useEffect, useRef, useState } from 'react'
 
-import { initAudioInput, pitchProcessorUrl } from '@/core'
+import { pitchProcessorUrl } from '@/core'
 
 import { AudioContext, DebugAudioContext } from '../model'
 import { useDebugAudio } from '../model/useDebugAudio'
@@ -46,6 +46,19 @@ export const AudioProvider = ({ children }: { children: ReactNode }) => {
         if (isStarted) return
 
         try {
+            // Request microphone access FIRST — before any await.
+            // Browsers invalidate the "user activation" token after the first
+            // await, so getUserMedia must be the very first async call or the
+            // permission dialog may silently fail to appear.
+            const audioStream = await navigator.mediaDevices.getUserMedia({
+                audio: {
+                    echoCancellation: false,
+                    noiseSuppression: false,
+                    autoGainControl: false,
+                },
+            })
+            audioStreamRef.current = audioStream
+
             if (!audioContextRef.current) {
                 audioContextRef.current = new window.AudioContext()
             }
@@ -57,14 +70,9 @@ export const AudioProvider = ({ children }: { children: ReactNode }) => {
             }
 
             await audioContext.audioWorklet.addModule(pitchProcessorUrl)
-            const audioInput = await initAudioInput(audioContext)
 
-            if (!audioInput) {
-                throw new Error('Failed to access microphone')
-            }
-
-            audioStreamRef.current = audioInput.audioStream
-            audioSourceRef.current = audioInput.audioSource
+            const audioSource = audioContext.createMediaStreamSource(audioStream)
+            audioSourceRef.current = audioSource
 
             const pitchProcessorNode = new AudioWorkletNode(audioContext, 'pitch-processor')
             pitchProcessorRef.current = pitchProcessorNode
@@ -80,10 +88,16 @@ export const AudioProvider = ({ children }: { children: ReactNode }) => {
                 }
             }
 
-            audioInput.audioSource.connect(pitchProcessorNode)
+            audioSource.connect(pitchProcessorNode)
 
             setIsStarted(true)
         } catch (error) {
+            audioSourceRef.current?.disconnect()
+            audioSourceRef.current = null
+            audioStreamRef.current?.getTracks().forEach((track) => track.stop())
+            audioStreamRef.current = null
+            pitchProcessorRef.current?.disconnect()
+            pitchProcessorRef.current = null
             console.error('❌ Failed to initialize audio pipeline:', error)
         }
     }

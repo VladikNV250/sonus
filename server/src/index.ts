@@ -11,9 +11,13 @@ const __dirname = path.dirname(__filename)
 const DATA_PATH = path.join(__dirname, 'data', 'presets.json')
 
 const app = express()
-const PORT = 3001
+const PORT = process.env.PORT ?? 3001
 
-app.use(cors())
+app.use(
+    cors({
+        origin: process.env.CLIENT_URL ?? 'http://localhost:5173',
+    }),
+)
 app.use(express.json())
 
 const readPresets = async (): Promise<Preset[]> => {
@@ -81,5 +85,5 @@ app.post('/api/presets', async (req, res) => {
 })
 
 app.listen(PORT, () => {
-    console.log(`Server is running at http://localhost:${PORT}`)
+    console.log(`Server is running`)
 })

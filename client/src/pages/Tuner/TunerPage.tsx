@@ -5,6 +5,11 @@ import { TunerBoard } from '@/widgets/TunerBoard'
 const TunerPage: FC = () => {
     return (
         <main className="h-full min-h-[600px] w-full max-w-md mx-auto flex flex-col items-center justify-between relative overflow-hidden bg-neutral-950 font-sans">
+            <title>Sonus</title>
+            <meta
+                name="description"
+                content="A precise chromatic tuner for guitar and other instruments."
+            />
             <header className="w-full flex flex-col items-center justify-center p-6 z-10 pt-[env(safe-area-inset-top)]">
                 <h1 className="text-xl font-bold tracking-widest text-white/80 uppercase mt-4">
                     Sonus

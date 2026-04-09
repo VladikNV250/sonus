@@ -1,9 +1,9 @@
 import { type FC } from 'react'
 
-import guitarImage from '@/../public/guitar-headstock.png'
 import { PitchIndicator, STRING_LABELS, TuningStatusBadge } from '@/entities/pitch'
 import type { Preset } from '@/entities/presets'
 import { StringButton } from '@/features/guitar-tuning'
+import { guitarImage } from '@/shared/assets'
 
 import { STRING_BUTTON_POSITIONS } from '../consts'
 import { usePresetTuner } from '../model'
