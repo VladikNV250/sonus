@@ -10,7 +10,6 @@
         "module": "ESNext",
         "moduleResolution": "bundler",
         "target": "esnext",
-        "noEmit": true,
         // For nodejs:
         "lib": ["esnext"],
         "types": ["node"],
