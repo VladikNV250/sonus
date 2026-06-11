@@ -3,7 +3,7 @@ import cors from 'cors'
 import { prisma } from './lib/prisma'
 
 const app = express()
-const PORT = process.env.PORT ?? 3001
+const PORT = process.env.PORT ?? 3000
 
 app.use(
     cors({
@@ -95,13 +95,13 @@ app.delete('/api/presets/:id', async (req, res) => {
             where: { id },
         })
 
-        res.status(204)
+        res.status(204).send()
     } catch (error) {
         console.error('Failed to delete preset:', error)
         res.status(500).json({ error: 'Failed to delete preset (it might not exist)' })
     }
 })
 
-app.listen(PORT, () => {
+app.listen(Number(PORT), '0.0.0.0', () => {
     console.log(`Server is running on port ${PORT}`)
 })
