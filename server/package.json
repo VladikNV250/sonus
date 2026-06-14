@@ -6,8 +6,8 @@
     "type": "module",
     "scripts": {
         "dev": "nodemon --watch src --ext ts,json --exec tsx ./src/index.ts",
-        "build": "prisma generate && tsc",
-        "start": "npx prisma migrate deploy && tsx ./src/index.ts"
+        "build": "prisma generate && tsup src/index.ts --format esm --clean",
+        "start": "npx prisma migrate deploy && node dist/index.js"
     },
     "keywords": [],
     "author": "",
@@ -18,10 +18,15 @@
         "@types/express": "^5.0.6",
         "@types/node": "^22.19.15",
         "nodemon": "^3.1.14",
+        "tsup": "^8.5.1",
         "typescript": "^5.9.3"
     },
     "dependencies": {
+        "@prisma/adapter-better-sqlite3": "^7.8.0",
+        "@prisma/client": "^7.8.0",
+        "better-sqlite3": "^12.10.0",
         "cors": "^2.8.6",
+        "dotenv": "^17.4.2",
         "express": "^5.2.1",
         "prisma": "^7.8.0",
         "tsx": "^4.21.0"
