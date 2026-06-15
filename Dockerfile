@@ -8,6 +8,7 @@ LABEL fly_launch_runtime="Node.js"
 WORKDIR /app
 
 ENV NODE_ENV="production"
+ENV HOST="0.0.0.0"
 ENV PNPM_HOME="/pnpm"
 ENV PATH="$PNPM_HOME:$PATH"
 RUN corepack enable
