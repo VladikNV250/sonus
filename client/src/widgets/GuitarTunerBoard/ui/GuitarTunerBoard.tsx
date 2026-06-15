@@ -3,6 +3,7 @@ import { type FC, useState } from 'react'
 
 import { PresetSelector, usePresetSelection } from '@/entities/presets'
 import { CreatePresetSheet } from '@/features/add-custom-preset'
+import { DeletePresetButton } from '@/features/delete-preset'
 
 import { PresetTuner } from './PresetTuner'
 
@@ -30,6 +31,7 @@ export const GuitarTunerBoard: FC = () => {
                 >
                     <Plus className="size-5" />
                 </button>
+                {selectedPreset && <DeletePresetButton presetId={selectedPreset.id} />}
             </div>
 
             {selectedPreset ? (
