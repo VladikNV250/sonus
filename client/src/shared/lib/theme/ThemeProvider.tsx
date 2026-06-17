@@ -29,8 +29,13 @@ export const ThemeProvider = ({ children, storageKey = 'sonus-ui-theme', ...prop
     const value = {
         theme,
         setTheme: (theme: Theme) => {
-            localStorage.setItem(storageKey, theme)
-            setTheme(theme)
+            try {
+                localStorage.setItem(storageKey, theme)
+            } catch (e) {
+                console.error('Failed to save theme to localStorage', e)
+            } finally {
+                setTheme(theme)
+            }
         },
     }
 
