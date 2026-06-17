@@ -17,11 +17,7 @@ export const PresetSelector: FC<Props> = ({ presets, selectedPreset, onSelectPre
                 className="w-full appearance-none bg-black/5 dark:bg-white/5 backdrop-blur-md border border-black/10 dark:border-white/10 text-neutral-900 dark:text-white rounded-2xl px-5 py-3 text-center text-sm font-semibold outline-none focus:bg-black/10 dark:focus:bg-white/10 transition-colors cursor-pointer"
             >
                 {presets.map((preset) => (
-                    <option
-                        key={preset.id}
-                        value={preset.id}
-                        className="bg-neutral-100 dark:bg-neutral-900 text-neutral-900 dark:text-white"
-                    >
+                    <option key={preset.id} value={preset.id}>
                         {preset.name}
                     </option>
                 ))}

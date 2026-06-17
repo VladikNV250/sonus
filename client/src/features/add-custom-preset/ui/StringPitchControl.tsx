@@ -27,7 +27,7 @@ export const StringPitchControl: FC<Props> = ({ string, stringLabel, updatePitch
                 className="flex-1 bg-black/5 dark:bg-white/5 border border-black/10 dark:border-white/10 p-2.5 rounded-xl text-neutral-900 dark:text-white text-sm outline-none focus:border-black/20 dark:focus:border-white/20 transition-colors"
             >
                 {NOTES.map((n) => (
-                    <option key={n} value={n} className="bg-neutral-100 dark:bg-neutral-900">
+                    <option key={n} value={n}>
                         {n}
                     </option>
                 ))}
@@ -43,7 +43,7 @@ export const StringPitchControl: FC<Props> = ({ string, stringLabel, updatePitch
                 className="w-20 bg-black/5 dark:bg-white/5 border border-black/10 dark:border-white/10 p-2.5 rounded-xl text-neutral-900 dark:text-white text-sm outline-none focus:border-black/20 dark:focus:border-white/20 transition-colors"
             >
                 {OCTAVES.map((o) => (
-                    <option key={o} value={o} className="bg-neutral-100 dark:bg-neutral-900">
+                    <option key={o} value={o}>
                         Oct {o}
                     </option>
                 ))}
