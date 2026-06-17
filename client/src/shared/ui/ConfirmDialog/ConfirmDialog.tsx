@@ -66,6 +66,7 @@ export const ConfirmDialog: FC<Props> = ({
                         <p className="text-white/50 mb-8 text-sm leading-relaxed">{description}</p>
                         <div className="flex w-full gap-3">
                             <button
+                                type="button"
                                 onClick={onClose}
                                 disabled={isPending}
                                 className="flex-1 py-3 cursor-pointer rounded-xl bg-white/5 text-white font-medium hover:bg-white/10 active:scale-95 transition-all disabled:opacity-50"
@@ -73,6 +74,7 @@ export const ConfirmDialog: FC<Props> = ({
                                 {cancelText}
                             </button>
                             <button
+                                type="button"
                                 onClick={onConfirm}
                                 disabled={isPending}
                                 className={`flex-1 py-3 flex cursor-pointer justify-center items-center rounded-xl font-medium border active:scale-95 transition-all disabled:opacity-50 ${
