@@ -1,4 +1,5 @@
 import { type ReactNode, useCallback, useEffect, useRef, useState } from 'react'
+import { toast } from 'sonner'
 
 import { pitchProcessorUrl } from '@/core'
 
@@ -99,6 +100,14 @@ export const AudioProvider = ({ children }: { children: ReactNode }) => {
             pitchProcessorRef.current?.disconnect()
             pitchProcessorRef.current = null
             console.error('❌ Failed to initialize audio pipeline:', error)
+
+            if (error instanceof DOMException && error.name === 'NotAllowedError') {
+                toast.error(
+                    'Microphone access denied. Please allow microphone access to use the tuner.',
+                )
+            } else {
+                toast.error('Failed to initialize microphone access.')
+            }
         }
     }
 

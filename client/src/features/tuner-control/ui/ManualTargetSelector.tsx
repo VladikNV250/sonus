@@ -27,7 +27,7 @@ export const ManualTargetSelector: FC<Props> = ({ mode, targetPitch, changeTarge
                     className="w-full appearance-none bg-white/90 dark:bg-neutral-900/90 backdrop-blur-2xl border border-black/10 dark:border-white/10 text-neutral-900 dark:text-white rounded-2xl px-3 py-3 text-center text-sm font-bold shadow-xl outline-none cursor-pointer"
                 >
                     {NOTES.map((note) => (
-                        <option key={note} value={note}>
+                        <option key={note} value={note} className="bg-white dark:bg-neutral-900">
                             {note}
                         </option>
                     ))}
@@ -44,7 +44,11 @@ export const ManualTargetSelector: FC<Props> = ({ mode, targetPitch, changeTarge
                     className="w-full appearance-none bg-white/90 dark:bg-neutral-900/90 backdrop-blur-2xl border border-black/10 dark:border-white/10 text-neutral-900 dark:text-white rounded-2xl px-3 py-3 text-center text-sm font-bold shadow-xl outline-none cursor-pointer"
                 >
                     {OCTAVES.map((octave) => (
-                        <option key={octave} value={octave}>
+                        <option
+                            key={octave}
+                            value={octave}
+                            className="bg-white dark:bg-neutral-900"
+                        >
                             Octave {octave}
                         </option>
                     ))}

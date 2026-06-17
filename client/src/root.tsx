@@ -6,6 +6,7 @@ import { ThemeProvider } from '@/shared/lib'
 
 import type { Route } from './+types/root'
 import { QueryProvider } from './app/providers/QueryProvider'
+import { ToastProvider } from './app/providers/ToastProvider'
 import { AudioProvider } from './features/audio'
 
 export const Layout = ({ children }: { children: React.ReactNode }) => {
@@ -49,6 +50,7 @@ export const Layout = ({ children }: { children: React.ReactNode }) => {
 const App = () => {
     return (
         <ThemeProvider>
+            <ToastProvider />
             <QueryProvider>
                 <AudioProvider>
                     <Outlet />
