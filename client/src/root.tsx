@@ -26,15 +26,12 @@ export const Layout = ({ children }: { children: React.ReactNode }) => {
                         __html: `
                             try {
                                 let theme = localStorage.getItem('sonus-ui-theme');
-                                if (!theme) {
+                                if (theme !== 'dark' && theme !== 'light') {
                                     theme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
                                     localStorage.setItem('sonus-ui-theme', theme);
                                 }
-                                if (theme === 'dark') {
-                                    document.documentElement.classList.add('dark');
-                                } else {
-                                    document.documentElement.classList.add('light');
-                                }
+                                document.documentElement.classList.remove('dark', 'light');
+                                document.documentElement.classList.add(theme);
                             } catch (_) {}
                         `,
                     }}
