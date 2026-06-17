@@ -31,7 +31,7 @@ export const SegmentedControl = ({
                         className={cn(segmentedControlItemVariants({ isActive }))}
                     >
                         {isActive && (
-                            <span className="absolute inset-0 bg-neutral-800 border border-white/5 rounded-xl shadow-md z-[-1]" />
+                            <span className="absolute inset-0 bg-white dark:bg-neutral-800 border border-black/5 dark:border-white/5 rounded-xl shadow-md z-[-1]" />
                         )}
                         {option.label}
                     </button>

@@ -28,10 +28,10 @@ export const StringButton = ({
         <button
             onClick={onSelect}
             className={cn(
-                'absolute flex items-center justify-center w-[52px] h-[52px] rounded-full border-[2.5px] transition-all duration-300 bg-neutral-900/90 backdrop-blur-md cursor-pointer',
+                'absolute flex items-center justify-center w-[52px] h-[52px] rounded-full border-[2.5px] transition-all duration-300 bg-white/90 dark:bg-neutral-900/90 backdrop-blur-md cursor-pointer',
                 isActive
                     ? 'border-amber-400 text-amber-400 scale-[1.15] shadow-[0_0_25px_rgba(251,191,36,0.2)]'
-                    : 'border-white/20 text-white/70 hover:border-white/40 hover:text-white',
+                    : 'border-black/20 dark:border-white/20 text-neutral-500 dark:text-white/70 hover:border-black/40 dark:hover:border-white/40 hover:text-neutral-900 dark:hover:text-white',
             )}
             style={position}
         >

@@ -2,8 +2,11 @@ import './index.css'
 
 import { isRouteErrorResponse, Links, Meta, Outlet, Scripts, ScrollRestoration } from 'react-router'
 
+import { ThemeProvider } from '@/shared/lib'
+
 import type { Route } from './+types/root'
 import { QueryProvider } from './app/providers/QueryProvider'
+import { ToastProvider } from './app/providers/ToastProvider'
 import { AudioProvider } from './features/audio'
 
 export const Layout = ({ children }: { children: React.ReactNode }) => {
@@ -19,6 +22,21 @@ export const Layout = ({ children }: { children: React.ReactNode }) => {
                 <meta name="theme-color" content="#0f0f0f" />
                 <Meta />
                 <Links />
+                <script
+                    dangerouslySetInnerHTML={{
+                        __html: `
+                            try {
+                                let theme = localStorage.getItem('sonus-ui-theme');
+                                if (theme !== 'dark' && theme !== 'light') {
+                                    theme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+                                    localStorage.setItem('sonus-ui-theme', theme);
+                                }
+                                document.documentElement.classList.remove('dark', 'light');
+                                document.documentElement.classList.add(theme);
+                            } catch (_) {}
+                        `,
+                    }}
+                />
             </head>
             <body suppressHydrationWarning>
                 {children}
@@ -31,11 +49,14 @@ export const Layout = ({ children }: { children: React.ReactNode }) => {
 
 const App = () => {
     return (
-        <QueryProvider>
-            <AudioProvider>
-                <Outlet />
-            </AudioProvider>
-        </QueryProvider>
+        <ThemeProvider>
+            <ToastProvider />
+            <QueryProvider>
+                <AudioProvider>
+                    <Outlet />
+                </AudioProvider>
+            </QueryProvider>
+        </ThemeProvider>
     )
 }
 

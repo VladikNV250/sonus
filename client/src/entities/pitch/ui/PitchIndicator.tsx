@@ -14,10 +14,10 @@ export const PitchIndicator: FC<Props> = ({ cents, isPerfect }) => {
 
     return (
         <div className="relative w-full max-w-[320px] h-20 flex items-center justify-center">
-            <div className="w-full h-[3px] bg-white/10 rounded-full relative">
-                <div className="absolute top-1/2 left-1/2 -translate-x-1/2 w-[3px] h-8 bg-white/30 -translate-y-1/2 rounded-full" />
-                <div className="absolute top-1/2 left-1/4 -translate-x-1/2 w-0.5 h-4 bg-white/10 -translate-y-1/2 rounded-full" />
-                <div className="absolute top-1/2 left-3/4 -translate-x-1/2 w-0.5 h-4 bg-white/10 -translate-y-1/2 rounded-full" />
+            <div className="w-full h-[3px] bg-black/5 dark:bg-white/10 rounded-full relative">
+                <div className="absolute top-1/2 left-1/2 -translate-x-1/2 w-[3px] h-8 bg-black/15 dark:bg-white/30 -translate-y-1/2 rounded-full" />
+                <div className="absolute top-1/2 left-1/4 -translate-x-1/2 w-0.5 h-4 bg-black/10 dark:bg-white/10 -translate-y-1/2 rounded-full" />
+                <div className="absolute top-1/2 left-3/4 -translate-x-1/2 w-0.5 h-4 bg-black/10 dark:bg-white/10 -translate-y-1/2 rounded-full" />
 
                 <div
                     className="absolute top-1/2 transition-all duration-50 pointer-events-none"
@@ -28,17 +28,19 @@ export const PitchIndicator: FC<Props> = ({ cents, isPerfect }) => {
                 >
                     <div
                         className={cn(
-                            'w-2 h-2 rounded-full absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 transition-colors shadow-[0_0_10px_rgba(255,255,255,0.6)]',
-                            isPerfect ? 'bg-green-400' : 'bg-white',
+                            'w-2 h-2 rounded-full absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 transition-colors',
+                            isPerfect
+                                ? 'bg-green-500 shadow-[0_0_10px_rgba(34,197,94,0.6)]'
+                                : 'bg-neutral-400 dark:bg-white dark:shadow-[0_0_10px_rgba(255,255,255,0.6)]',
                         )}
                     />
 
                     <div
                         className={cn(
-                            'absolute bottom-full mb-1.5 left-1/2 -translate-x-1/2 flex items-center justify-center min-w-[40px] h-[40px] rounded-full font-mono text-[13px] font-bold shadow-[0_4px_15px_rgba(255,255,255,0.3)] transition-all duration-50',
+                            'absolute bottom-full mb-1.5 left-1/2 -translate-x-1/2 flex items-center justify-center min-w-[40px] h-[40px] rounded-full font-mono text-[13px] font-bold transition-all duration-50',
                             isPerfect
-                                ? 'bg-green-400 text-black scale-110 shadow-green-500/50'
-                                : 'bg-white text-black',
+                                ? 'bg-green-500 text-white scale-110 shadow-[0_4px_15px_rgba(34,197,94,0.4)]'
+                                : 'bg-white text-neutral-600 shadow-[0_4px_15px_rgba(0,0,0,0.08)] dark:shadow-[0_4px_15px_rgba(255,255,255,0.3)]',
                         )}
                     >
                         {cents > 0 ? '+' : ''}

@@ -22,17 +22,19 @@ export const ListTile = ({
     return (
         <div
             className={cn(
-                'p-3 pr-4 flex items-center justify-between gap-4 relative bg-white/1',
-                hasBorder && 'border-b border-white/5',
+                'p-3 pr-4 flex items-center justify-between gap-4 relative bg-black/2 dark:bg-white/1',
+                hasBorder && 'border-b border-white/5 dark:border-white/5',
                 className,
             )}
         >
             <div className="flex items-center gap-3.5">
-                <div className="flex items-center justify-center w-10 h-10 bg-neutral-800/80 rounded-xl border border-white/5 shrink-0">
+                <div className="flex items-center justify-center w-10 h-10 bg-white dark:bg-neutral-800/80 rounded-xl border border-black/5 dark:border-white/5 shrink-0 shadow-sm dark:shadow-none">
                     {icon}
                 </div>
                 <div className="flex flex-col justify-center">
-                    <span className="text-white font-medium text-[16px]">{title}</span>
+                    <span className="text-neutral-900 dark:text-white font-medium text-[16px]">
+                        {title}
+                    </span>
                     {description && (
                         <span className="text-neutral-500 text-[13px] leading-tight">
                             {description}
