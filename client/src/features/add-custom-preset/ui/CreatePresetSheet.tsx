@@ -32,18 +32,13 @@ export const CreatePresetSheet: FC<Props> = ({ isOpen, onClose }) => {
                         animate={{ y: 0 }}
                         exit={{ y: '100%' }}
                         transition={{ type: 'spring', damping: 25, stiffness: 220 }}
-                        className="relative w-full max-w-md mx-auto rounded-t-3xl overflow-hidden"
+                        className="relative w-full max-w-md mx-auto rounded-t-3xl overflow-hidden bg-linear-to-br from-white/95 to-white/90 dark:from-[#1e1c28]/95 dark:to-[#12111a]/90 border border-black/10 dark:border-white/10 border-b-0 shadow-[0_-20px_60px_rgba(0,0,0,0.1)] dark:shadow-[0_-20px_60px_rgba(0,0,0,0.6)] backdrop-blur-xl"
                         style={{
-                            background:
-                                'linear-gradient(160deg, rgba(30,28,40,0.98) 0%, rgba(18,17,26,0.99) 100%)',
-                            border: '1px solid rgba(255,255,255,0.08)',
-                            borderBottom: 'none',
-                            boxShadow: '0 -20px 60px rgba(0,0,0,0.6)',
                             paddingBottom: 'calc(env(safe-area-inset-bottom) + 80px + 24px)',
                         }}
                     >
                         <div className="flex justify-center pt-3 pb-1">
-                            <div className="w-10 h-1 rounded-full bg-white/20" />
+                            <div className="w-10 h-1 rounded-full bg-black/20 dark:bg-white/20" />
                         </div>
 
                         <div className="flex items-center justify-between px-6 pt-2 pb-4">
@@ -54,11 +49,11 @@ export const CreatePresetSheet: FC<Props> = ({ isOpen, onClose }) => {
                                     onClose()
                                     reset()
                                 }}
-                                className="cursor-pointer disabled:cursor-default text-sm text-white/50 hover:text-white transition-colors"
+                                className="cursor-pointer disabled:cursor-default text-sm text-neutral-500 dark:text-white/50 hover:text-neutral-900 dark:hover:text-white transition-colors"
                             >
                                 Cancel
                             </button>
-                            <h2 className="text-base font-semibold text-white tracking-wide">
+                            <h2 className="text-base font-semibold text-neutral-900 dark:text-white tracking-wide">
                                 New Preset
                             </h2>
                             <button
@@ -77,7 +72,7 @@ export const CreatePresetSheet: FC<Props> = ({ isOpen, onClose }) => {
                                 placeholder="Preset name..."
                                 value={name}
                                 onChange={changeName}
-                                className="w-full bg-white/5 border border-white/10 rounded-2xl px-4 py-3 text-white outline-none focus:border-white/20 transition-all placeholder:text-white/20"
+                                className="w-full bg-black/5 dark:bg-white/5 border border-black/10 dark:border-white/10 rounded-2xl px-4 py-3 text-neutral-900 dark:text-white outline-none focus:border-black/20 dark:focus:border-white/20 transition-all placeholder:text-neutral-500 dark:placeholder:text-white/20"
                             />
                             {errors?.name && (
                                 <p className="text-red-500 text-sm">{errors.name.join(', ')}</p>
