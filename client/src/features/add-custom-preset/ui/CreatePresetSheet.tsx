@@ -32,7 +32,7 @@ export const CreatePresetSheet: FC<Props> = ({ isOpen, onClose }) => {
                         animate={{ y: 0 }}
                         exit={{ y: '100%' }}
                         transition={{ type: 'spring', damping: 25, stiffness: 220 }}
-                        className="relative w-full max-w-md mx-auto rounded-t-3xl overflow-hidden bg-linear-to-br from-white/95 to-white/90 dark:from-[#1e1c28fA] dark:to-[#12111afC] border border-black/10 dark:border-white/10 border-b-0 shadow-[0_-20px_60px_rgba(0,0,0,0.1)] dark:shadow-[0_-20px_60px_rgba(0,0,0,0.6)] backdrop-blur-xl"
+                        className="relative w-full max-w-md mx-auto rounded-t-3xl overflow-hidden bg-linear-to-br from-white/95 to-white/90 dark:from-[#1e1c28]/95 dark:to-[#12111a]/90 border border-black/10 dark:border-white/10 border-b-0 shadow-[0_-20px_60px_rgba(0,0,0,0.1)] dark:shadow-[0_-20px_60px_rgba(0,0,0,0.6)] backdrop-blur-xl"
                         style={{
                             paddingBottom: 'calc(env(safe-area-inset-bottom) + 80px + 24px)',
                         }}

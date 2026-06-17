@@ -23,7 +23,7 @@ export const ListTile = ({
         <div
             className={cn(
                 'p-3 pr-4 flex items-center justify-between gap-4 relative bg-black/2 dark:bg-white/1',
-                hasBorder && 'border-b border-white/5',
+                hasBorder && 'border-b border-white/5 dark:border-white/5',
                 className,
             )}
         >
