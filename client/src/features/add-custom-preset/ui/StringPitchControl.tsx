@@ -13,7 +13,9 @@ interface Props {
 export const StringPitchControl: FC<Props> = ({ string, stringLabel, updatePitch }) => {
     return (
         <div className="flex items-center gap-3">
-            <span className="text-xs text-white/35 w-6 text-right">{stringLabel}</span>
+            <span className="text-xs text-neutral-500/50 dark:text-white/35 w-6 text-right">
+                {stringLabel}
+            </span>
 
             <select
                 value={string.note}
@@ -22,10 +24,10 @@ export const StringPitchControl: FC<Props> = ({ string, stringLabel, updatePitch
                         note: e.target.value as Note,
                     })
                 }
-                className="flex-1 bg-white/5 border border-white/10 p-2.5 rounded-xl text-white text-sm outline-none focus:border-white/20 transition-colors"
+                className="flex-1 bg-black/5 dark:bg-white/5 border border-black/10 dark:border-white/10 p-2.5 rounded-xl text-neutral-900 dark:text-white text-sm outline-none focus:border-black/20 dark:focus:border-white/20 transition-colors"
             >
                 {NOTES.map((n) => (
-                    <option key={n} value={n} className="bg-neutral-900">
+                    <option key={n} value={n} className="bg-neutral-100 dark:bg-neutral-900">
                         {n}
                     </option>
                 ))}
@@ -38,10 +40,10 @@ export const StringPitchControl: FC<Props> = ({ string, stringLabel, updatePitch
                         octave: Number(e.target.value),
                     })
                 }
-                className="w-20 bg-white/5 border border-white/10 p-2.5 rounded-xl text-white text-sm outline-none focus:border-white/20 transition-colors"
+                className="w-20 bg-black/5 dark:bg-white/5 border border-black/10 dark:border-white/10 p-2.5 rounded-xl text-neutral-900 dark:text-white text-sm outline-none focus:border-black/20 dark:focus:border-white/20 transition-colors"
             >
                 {OCTAVES.map((o) => (
-                    <option key={o} value={o} className="bg-neutral-900">
+                    <option key={o} value={o} className="bg-neutral-100 dark:bg-neutral-900">
                         Oct {o}
                     </option>
                 ))}

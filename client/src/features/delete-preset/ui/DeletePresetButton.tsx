@@ -21,7 +21,7 @@ export const DeletePresetButton: FC<Props> = ({ presetId }) => {
                 onClick={() => setIsConfirmOpen(true)}
                 disabled={isPending}
                 aria-label="Delete preset"
-                className="flex items-center cursor-pointer justify-center w-11 h-11 rounded-2xl bg-white/5 border border-white/10 text-white/60 hover:text-red-400 hover:bg-white/10 hover:border-red-400/30 active:scale-95 transition-all duration-150 disabled:opacity-50 disabled:pointer-events-none"
+                className="flex items-center cursor-pointer justify-center w-11 h-11 rounded-2xl bg-black/5 dark:bg-white/5 border border-black/10 dark:border-white/10 text-neutral-500 dark:text-white/60 hover:text-red-500 dark:hover:text-red-400 hover:bg-black/10 dark:hover:bg-white/10 hover:border-red-500/30 dark:hover:border-red-400/30 active:scale-95 transition-all duration-150 disabled:opacity-50 disabled:pointer-events-none"
             >
                 <Trash2 className="size-5" />
             </button>

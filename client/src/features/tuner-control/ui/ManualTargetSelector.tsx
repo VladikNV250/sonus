@@ -24,15 +24,19 @@ export const ManualTargetSelector: FC<Props> = ({ mode, targetPitch, changeTarge
                 <select
                     value={targetPitch?.note}
                     onChange={(e) => changeTargetPitch(e, 'note')}
-                    className="w-full appearance-none bg-neutral-900/90 backdrop-blur-2xl border border-white/10 text-white rounded-2xl px-3 py-3 text-center text-sm font-bold shadow-xl outline-none cursor-pointer"
+                    className="w-full appearance-none bg-white/90 dark:bg-neutral-900/90 backdrop-blur-2xl border border-black/10 dark:border-white/10 text-neutral-900 dark:text-white rounded-2xl px-3 py-3 text-center text-sm font-bold shadow-xl outline-none cursor-pointer"
                 >
                     {NOTES.map((note) => (
-                        <option key={note} value={note} className="bg-neutral-900 text-white">
+                        <option
+                            key={note}
+                            value={note}
+                            className="bg-neutral-100 dark:bg-neutral-900 text-neutral-900 dark:text-white"
+                        >
                             {note}
                         </option>
                     ))}
                 </select>
-                <div className="absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none text-white/50 text-[10px]">
+                <div className="absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none text-neutral-500 dark:text-white/50 text-[10px]">
                     ▼
                 </div>
             </div>
@@ -41,15 +45,19 @@ export const ManualTargetSelector: FC<Props> = ({ mode, targetPitch, changeTarge
                 <select
                     value={targetPitch?.octave}
                     onChange={(e) => changeTargetPitch(e, 'octave')}
-                    className="w-full appearance-none bg-neutral-900/90 backdrop-blur-2xl border border-white/10 text-white rounded-2xl px-3 py-3 text-center text-sm font-bold shadow-xl outline-none cursor-pointer"
+                    className="w-full appearance-none bg-white/90 dark:bg-neutral-900/90 backdrop-blur-2xl border border-black/10 dark:border-white/10 text-neutral-900 dark:text-white rounded-2xl px-3 py-3 text-center text-sm font-bold shadow-xl outline-none cursor-pointer"
                 >
                     {OCTAVES.map((octave) => (
-                        <option key={octave} value={octave} className="bg-neutral-900 text-white">
+                        <option
+                            key={octave}
+                            value={octave}
+                            className="bg-neutral-100 dark:bg-neutral-900 text-neutral-900 dark:text-white"
+                        >
                             Octave {octave}
                         </option>
                     ))}
                 </select>
-                <div className="absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none text-white/50 text-[10px]">
+                <div className="absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none text-neutral-500 dark:text-white/50 text-[10px]">
                     ▼
                 </div>
             </div>

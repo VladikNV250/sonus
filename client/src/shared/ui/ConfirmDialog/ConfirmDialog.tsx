@@ -45,14 +45,14 @@ export const ConfirmDialog: FC<Props> = ({
                         animate={{ scale: 1, opacity: 1, y: 0 }}
                         exit={{ scale: 0.9, opacity: 0, y: 10 }}
                         transition={{ type: 'spring', damping: 25, stiffness: 300 }}
-                        className="relative w-full max-w-xs bg-[#1a1a24] border border-white/10 rounded-[24px] p-6 shadow-2xl flex flex-col items-center text-center"
+                        className="relative w-full max-w-xs bg-white dark:bg-[#1a1a24] border border-black/10 dark:border-white/10 rounded-[24px] p-6 shadow-2xl flex flex-col items-center text-center"
                     >
                         {icon && (
                             <div
                                 className={`w-14 h-14 rounded-full flex items-center justify-center mb-4 ${
                                     isDanger
                                         ? 'bg-red-500/10 text-red-500'
-                                        : 'bg-white/5 text-white'
+                                        : 'bg-black/5 dark:bg-white/5 text-neutral-900 dark:text-white'
                                 }`}
                             >
                                 <div className="opacity-80 flex items-center justify-center">
@@ -60,16 +60,18 @@ export const ConfirmDialog: FC<Props> = ({
                                 </div>
                             </div>
                         )}
-                        <h3 className="text-xl font-semibold text-white mb-2 tracking-wide">
+                        <h3 className="text-xl font-semibold text-neutral-900 dark:text-white mb-2 tracking-wide">
                             {title}
                         </h3>
-                        <p className="text-white/50 mb-8 text-sm leading-relaxed">{description}</p>
+                        <p className="text-neutral-500 dark:text-white/50 mb-8 text-sm leading-relaxed">
+                            {description}
+                        </p>
                         <div className="flex w-full gap-3">
                             <button
                                 type="button"
                                 onClick={onClose}
                                 disabled={isPending}
-                                className="flex-1 py-3 cursor-pointer rounded-xl bg-white/5 text-white font-medium hover:bg-white/10 active:scale-95 transition-all disabled:opacity-50"
+                                className="flex-1 py-3 cursor-pointer rounded-xl bg-black/5 dark:bg-white/5 text-neutral-900 dark:text-white font-medium hover:bg-black/10 dark:hover:bg-white/10 active:scale-95 transition-all disabled:opacity-50"
                             >
                                 {cancelText}
                             </button>
@@ -80,7 +82,7 @@ export const ConfirmDialog: FC<Props> = ({
                                 className={`flex-1 py-3 flex cursor-pointer justify-center items-center rounded-xl font-medium border active:scale-95 transition-all disabled:opacity-50 ${
                                     isDanger
                                         ? 'bg-red-500/10 text-red-400 border-red-500/20 hover:bg-red-500/20'
-                                        : 'bg-white/10 text-white border-white/20 hover:bg-white/20'
+                                        : 'bg-black/10 dark:bg-white/10 text-neutral-900 dark:text-white border-black/20 dark:border-white/20 hover:bg-black/20 dark:hover:bg-white/20'
                                 }`}
                             >
                                 {isPending ? (
