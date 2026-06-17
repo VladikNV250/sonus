@@ -8,11 +8,13 @@ type Props = {
     storageKey?: string
 }
 
+const isTheme = (value: string | null): value is Theme => value === 'dark' || value === 'light'
+
 export const ThemeProvider = ({ children, storageKey = 'sonus-ui-theme', ...props }: Props) => {
     const [theme, setTheme] = useState<Theme>(() => {
         if (typeof window === 'undefined') return 'dark'
-        const storedTheme = localStorage.getItem(storageKey) as Theme | null
-        if (storedTheme) return storedTheme
+        const storedTheme = localStorage.getItem(storageKey)
+        if (isTheme(storedTheme)) return storedTheme
 
         return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'
     })
