@@ -10,8 +10,8 @@ export interface SonusDB extends DBSchema {
     }
 }
 
-export const initDB = async () => {
-    return openDB<SonusDB>('sonus-db', 1, {
+export const initDB = () =>
+    openDB<SonusDB>('sonus-db', 1, {
         upgrade(db) {
             // migration: seed default presets and create presets store
             if (!db.objectStoreNames.contains('presets')) {
@@ -22,6 +22,5 @@ export const initDB = async () => {
             }
         },
     })
-}
 
 export const dbPromise = initDB()
