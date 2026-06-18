@@ -9,7 +9,7 @@ import type { TunerMode } from './type'
 export const usePitchDetection = () => {
     const { subscribeToFrequency } = useAudioContext()
     const [mode, setMode] = useState<TunerMode>('auto')
-    const [targetPitch, setTargetPitch] = useState<Pitch>({ note: 'C', octave: 0 })
+    const [targetPitch, setTargetPitch] = useState<Pitch>({ note: 'E', octave: 4 })
     const [pitchData, setPitchData] = useState<PitchData | null>(null)
 
     useEffect(() => {
