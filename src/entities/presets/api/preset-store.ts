@@ -21,6 +21,7 @@ export const PresetStore = {
 
     async add(params: CreatePresetParams): Promise<Preset> {
         const db = await dbPromise
+
         const newPreset: Preset = {
             ...params,
             id: uuidv4(),
@@ -28,6 +29,16 @@ export const PresetStore = {
         }
         await db.put('presets', mapToDTO(newPreset))
         return newPreset
+    },
+
+    async importMany(presets: Preset[]): Promise<Preset[]> {
+        const db = await dbPromise
+        const tx = db.transaction('presets', 'readwrite')
+
+        const writes = presets.map((preset) => tx.store.add(mapToDTO(preset)))
+        await Promise.all([...writes, tx.done])
+
+        return presets
     },
 
     async delete(id: string): Promise<void> {

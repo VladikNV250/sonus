@@ -20,4 +20,9 @@ export const CreatePresetSchema = z.object({
         ),
 })
 
+export const PresetSchema = CreatePresetSchema.extend({
+    id: z.string(),
+    isCustom: z.boolean().optional(),
+})
+
 export type CreatePresetParams = z.infer<typeof CreatePresetSchema>
