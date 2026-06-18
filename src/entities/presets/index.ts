@@ -3,6 +3,7 @@ export {
     type CreatePresetParams,
     CreatePresetSchema,
     type Preset,
+    PresetSchema,
     usePresets,
     usePresetSelection,
 } from './model'

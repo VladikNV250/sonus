@@ -1,6 +1,8 @@
-import { Activity, Bug, Palette, Settings, Volume2 } from 'lucide-react'
+import { Activity, Bug, Download, Palette, Settings, Upload, Volume2 } from 'lucide-react'
 
 import { useDebugAudioContext } from '@/features/audio/model'
+import { ExportPresetsButton } from '@/features/export-presets'
+import { ImportPresetsButton } from '@/features/import-presets'
 import { type Theme, useTheme } from '@/shared/lib'
 import { GlassPanel, ListTile, SegmentedControl, Switch } from '@/shared/ui'
 
@@ -40,6 +42,27 @@ export const SettingsPage = () => {
                                     onChange={(v) => setTheme(v as Theme)}
                                 />
                             }
+                        />
+                    </GlassPanel>
+                </div>
+
+                <div className="flex flex-col gap-2 mt-4">
+                    <span className="px-2 text-xs font-bold text-neutral-500 uppercase tracking-widest">
+                        Presets
+                    </span>
+                    <GlassPanel className="flex flex-col overflow-hidden p-0">
+                        <ListTile
+                            icon={<Download className="text-blue-500" size={20} />}
+                            title="Export Presets"
+                            description="Save your custom presets to a file"
+                            action={<ExportPresetsButton />}
+                        />
+                        <ListTile
+                            icon={<Upload className="text-emerald-500" size={20} />}
+                            title="Import Presets"
+                            description="Load presets from a file"
+                            hasBorder={false}
+                            action={<ImportPresetsButton />}
                         />
                     </GlassPanel>
                 </div>
