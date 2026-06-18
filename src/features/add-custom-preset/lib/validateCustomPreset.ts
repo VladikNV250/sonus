@@ -5,6 +5,7 @@ import { type CreatePresetParams, CreatePresetSchema } from '@/entities/presets'
 type ValidationResult =
     | {
           isValid: true
+          data: CreatePresetParams
       }
     | {
           isValid: false
@@ -15,7 +16,7 @@ export const validateCustomPreset = (preset: unknown): ValidationResult => {
     const result = CreatePresetSchema.safeParse(preset)
 
     if (result.success) {
-        return { isValid: true }
+        return { isValid: true, data: result.data }
     } else {
         return {
             isValid: false,

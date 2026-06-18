@@ -58,12 +58,13 @@ export const useCreatePreset = (onClose: () => void) => {
     }
 
     const handleSave = () => {
-        if (!validateCustomPreset(preset).isValid) {
+        const validation = validateCustomPreset(preset)
+        if (!validation.isValid) {
             setShowErrors(true)
             return
         }
 
-        addPreset(preset, () => {
+        addPreset(validation.data, () => {
             onClose()
             reset()
         })
