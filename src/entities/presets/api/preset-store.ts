@@ -35,11 +35,9 @@ export const PresetStore = {
         const db = await dbPromise
         const tx = db.transaction('presets', 'readwrite')
 
-        for (const preset of presets) {
-            void tx.store.put(mapToDTO(preset))
-        }
+        const writes = presets.map((preset) => tx.store.add(mapToDTO(preset)))
+        await Promise.all([...writes, tx.done])
 
-        await tx.done
         return presets
     },
 

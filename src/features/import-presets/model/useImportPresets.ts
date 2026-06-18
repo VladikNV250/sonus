@@ -23,12 +23,15 @@ export const useImportPresets = () => {
             const existingPresets = await PresetStore.getAll()
 
             const existingNames = new Set(existingPresets.map((p) => p.name.trim().toLowerCase()))
+            const existingIds = new Set(existingPresets.map((p) => p.id))
             const newPresets: Preset[] = []
 
             for (const preset of importData) {
-                if (!existingNames.has(preset.name.trim().toLowerCase())) {
+                const normalizedName = preset.name.trim().toLowerCase()
+                if (!existingIds.has(preset.id) && !existingNames.has(normalizedName)) {
                     newPresets.push(preset)
-                    existingNames.add(preset.name.trim().toLowerCase())
+                    existingIds.add(preset.id)
+                    existingNames.add(normalizedName)
                 }
             }
 
