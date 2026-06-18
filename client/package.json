@@ -23,13 +23,15 @@
         "class-variance-authority": "^0.7.1",
         "clsx": "^2.1.1",
         "framer-motion": "^12.38.0",
+        "idb": "^8.0.3",
         "isbot": "^5.1.36",
         "lucide-react": "^1.7.0",
         "react": "^19.2.4",
         "react-dom": "^19.2.4",
         "react-router": "7.13.1",
         "sonner": "^2.0.7",
-        "tailwind-merge": "^3.5.0"
+        "tailwind-merge": "^3.5.0",
+        "uuid": "^14.0.0"
     },
     "devDependencies": {
         "@eslint/js": "^10.0.1",
@@ -40,6 +42,7 @@
         "@types/node": "^22",
         "@types/react": "^19.2.14",
         "@types/react-dom": "^19.2.3",
+        "@types/uuid": "^11.0.0",
         "@vitejs/plugin-basic-ssl": "^2.3.0",
         "eslint": "^10.1.0",
         "eslint-config-prettier": "^10.1.8",

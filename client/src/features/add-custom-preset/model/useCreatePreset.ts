@@ -2,7 +2,7 @@ import { type ChangeEvent, useState } from 'react'
 
 import type { Pitch } from '@/entities/pitch'
 import { STRING_LABELS } from '@/entities/pitch'
-import type { Preset } from '@/entities/presets'
+import type { CreatePresetParams } from '@/entities/presets'
 
 import { DEFAULT_STRINGS } from '../consts'
 import { validateCustomPreset } from '../lib'
@@ -25,7 +25,7 @@ export const useCreatePreset = (onClose: () => void) => {
         }
     })
 
-    const preset: Omit<Preset, 'id'> = {
+    const preset: CreatePresetParams = {
         name,
         strings: pitches,
     }

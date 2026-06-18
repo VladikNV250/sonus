@@ -1,14 +1,13 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { toast } from 'sonner'
 
-import { type Preset } from '@/entities/presets'
-import { ApiClient } from '@/shared/api/api-client'
+import { type Preset, PresetStore } from '@/entities/presets'
 
 export const useDeletePreset = () => {
     const queryClient = useQueryClient()
 
     return useMutation({
-        mutationFn: (id: Preset['id']) => ApiClient.delete(`/presets/${id}`),
+        mutationFn: (id: Preset['id']) => PresetStore.delete(id),
         onSuccess: async () => {
             await queryClient.invalidateQueries({ queryKey: ['presets'] })
             toast.success('Preset deleted successfully')
