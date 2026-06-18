@@ -1,4 +1,4 @@
-import type { Preset } from '@/entities/presets'
+import type { CreatePresetParams } from '@/entities/presets'
 
 type ValidationResult =
     | {
@@ -6,11 +6,11 @@ type ValidationResult =
       }
     | {
           isValid: false
-          errors: Partial<Record<keyof Omit<Preset, 'id'>, string[]>>
+          errors: Partial<Record<keyof CreatePresetParams, string[]>>
       }
 
-export const validateCustomPreset = (preset: Omit<Preset, 'id'>): ValidationResult => {
-    const errors: Partial<Record<keyof Omit<Preset, 'id'>, string[]>> = {}
+export const validateCustomPreset = (preset: CreatePresetParams): ValidationResult => {
+    const errors: Partial<Record<keyof CreatePresetParams, string[]>> = {}
 
     if (preset.name.trim().length < 2) errors.name = ['Name must be at least 2 characters long']
     const stringErrors: string[] = []
