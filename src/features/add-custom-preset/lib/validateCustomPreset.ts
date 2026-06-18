@@ -1,3 +1,5 @@
+import { z } from 'zod'
+
 import { type CreatePresetParams, CreatePresetSchema } from '@/entities/presets'
 
 type ValidationResult =
@@ -17,7 +19,7 @@ export const validateCustomPreset = (preset: unknown): ValidationResult => {
     } else {
         return {
             isValid: false,
-            errors: result.error.flatten().fieldErrors,
+            errors: z.flattenError(result.error).fieldErrors,
         }
     }
 }
