@@ -1,30 +1,26 @@
-import type { CreatePresetParams } from '@/entities/presets'
+import { z } from 'zod'
+
+import { type CreatePresetParams, CreatePresetSchema } from '@/entities/presets'
 
 type ValidationResult =
     | {
           isValid: true
+          data: CreatePresetParams
       }
     | {
           isValid: false
           errors: Partial<Record<keyof CreatePresetParams, string[]>>
       }
 
-export const validateCustomPreset = (preset: CreatePresetParams): ValidationResult => {
-    const errors: Partial<Record<keyof CreatePresetParams, string[]>> = {}
+export const validateCustomPreset = (preset: unknown): ValidationResult => {
+    const result = CreatePresetSchema.safeParse(preset)
 
-    if (preset.name.trim().length < 2) errors.name = ['Name must be at least 2 characters long']
-    const stringErrors: string[] = []
-    if (preset.strings.length !== 6) stringErrors.push('Preset must have 6 strings')
-    if (preset.strings.some((s) => !s.note || !s.octave))
-        stringErrors.push('All strings must have a note and octave')
-    if (stringErrors.length > 0) errors.strings = stringErrors
-
-    if (Object.keys(errors).length === 0) {
-        return { isValid: true }
+    if (result.success) {
+        return { isValid: true, data: result.data }
     } else {
         return {
             isValid: false,
-            errors,
+            errors: z.flattenError(result.error).fieldErrors,
         }
     }
 }

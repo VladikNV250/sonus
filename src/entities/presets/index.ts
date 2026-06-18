@@ -1,3 +1,9 @@
 export { PresetStore } from './api'
-export { type CreatePresetParams, type Preset, usePresets, usePresetSelection } from './model'
+export {
+    type CreatePresetParams,
+    CreatePresetSchema,
+    type Preset,
+    usePresets,
+    usePresetSelection,
+} from './model'
 export { PresetSelector } from './ui'
