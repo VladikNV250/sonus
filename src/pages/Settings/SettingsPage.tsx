@@ -1,13 +1,17 @@
 import { Activity, Bug, Download, Palette, Settings, Upload, Volume2 } from 'lucide-react'
 
+import { useAudioSettings } from '@/entities/audio-settings'
 import { useDebugAudioContext } from '@/features/audio/model'
 import { ExportPresetsButton } from '@/features/export-presets'
 import { ImportPresetsButton } from '@/features/import-presets'
 import { type Theme, useTheme } from '@/shared/lib'
+import { useAppSounds } from '@/shared/lib/audio/useAppSounds'
 import { GlassPanel, ListTile, SegmentedControl, Switch } from '@/shared/ui'
 
 export const SettingsPage = () => {
     const { theme, setTheme } = useTheme()
+    const { settings, updateAudioSettings } = useAudioSettings()
+    const { playSound } = useAppSounds()
     const { isDebug, toggleDebugMode, debugFrequency, setDebugFrequency, isMuted, toggleMute } =
         useDebugAudioContext()
 
@@ -63,6 +67,51 @@ export const SettingsPage = () => {
                             description="Load presets from a file"
                             hasBorder={false}
                             action={<ImportPresetsButton />}
+                        />
+                    </GlassPanel>
+                </div>
+
+                <div className="flex flex-col gap-2 mt-4">
+                    <span className="px-2 text-xs font-bold text-neutral-500 uppercase tracking-widest">
+                        Audio Feedback
+                    </span>
+                    <GlassPanel className="flex flex-col overflow-hidden p-0">
+                        <ListTile
+                            icon={<Volume2 className="text-blue-400" size={20} />}
+                            title="UI Sounds"
+                            description="Play sound on clicks and selections"
+                            action={
+                                <Switch
+                                    ariaLabel="Toggle UI sounds"
+                                    checked={settings.audio.uiSoundsEnabled}
+                                    onChange={() => {
+                                        const newValue = !settings.audio.uiSoundsEnabled
+                                        updateAudioSettings({ uiSoundsEnabled: newValue })
+                                        if (newValue) {
+                                            playSound('click')
+                                        }
+                                    }}
+                                />
+                            }
+                        />
+                        <ListTile
+                            icon={<Activity className="text-emerald-400" size={20} />}
+                            title="Perfect Pitch Sound"
+                            description="Play sound when string is in tune"
+                            hasBorder={false}
+                            action={
+                                <Switch
+                                    ariaLabel="Toggle perfect pitch sound"
+                                    checked={settings.audio.pitchSoundEnabled}
+                                    onChange={() => {
+                                        const newValue = !settings.audio.pitchSoundEnabled
+                                        updateAudioSettings({ pitchSoundEnabled: newValue })
+                                        if (newValue) {
+                                            playSound('pitch')
+                                        }
+                                    }}
+                                />
+                            }
                         />
                     </GlassPanel>
                 </div>
