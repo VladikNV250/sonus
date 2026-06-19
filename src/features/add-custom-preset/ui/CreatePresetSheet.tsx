@@ -2,6 +2,7 @@ import { AnimatePresence, motion } from 'framer-motion'
 import { type FC } from 'react'
 
 import { STRING_LABELS } from '@/entities/pitch'
+import { useAppSounds } from '@/shared/lib/audio/useAppSounds'
 
 import { useCreatePreset } from '../model'
 import { StringPitchControl } from './StringPitchControl'
@@ -14,6 +15,7 @@ interface Props {
 export const CreatePresetSheet: FC<Props> = ({ isOpen, onClose }) => {
     const { name, changeName, pitches, updatePitch, reset, errors, isPending, handleSave } =
         useCreatePreset(onClose)
+    const { playSound } = useAppSounds()
 
     return (
         <AnimatePresence>
@@ -24,7 +26,10 @@ export const CreatePresetSheet: FC<Props> = ({ isOpen, onClose }) => {
                         animate={{ opacity: 1 }}
                         exit={{ opacity: 0 }}
                         className="absolute inset-0 bg-black/60 backdrop-blur-sm cursor-default"
-                        onClick={onClose}
+                        onClick={() => {
+                            playSound('click')
+                            onClose()
+                        }}
                     />
 
                     <motion.div
@@ -46,6 +51,7 @@ export const CreatePresetSheet: FC<Props> = ({ isOpen, onClose }) => {
                                 type="button"
                                 disabled={isPending}
                                 onClick={() => {
+                                    playSound('click')
                                     onClose()
                                     reset()
                                 }}
@@ -58,7 +64,10 @@ export const CreatePresetSheet: FC<Props> = ({ isOpen, onClose }) => {
                             </h2>
                             <button
                                 type="button"
-                                onClick={handleSave}
+                                onClick={() => {
+                                    playSound('click')
+                                    handleSave()
+                                }}
                                 disabled={isPending}
                                 className="cursor-pointer disabled:cursor-default text-sm font-semibold text-violet-400 disabled:opacity-30 disabled:text-gray-500"
                             >

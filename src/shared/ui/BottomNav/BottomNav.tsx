@@ -1,10 +1,13 @@
 import { NavLink } from 'react-router'
 
 import { cn } from '@/shared/lib'
+import { useAppSounds } from '@/shared/lib/audio/useAppSounds'
 
 import { NAVIGATION_LINKS } from './links'
 
 export const BottomNav = () => {
+    const { playSound } = useAppSounds()
+
     return (
         <nav className="fixed bottom-0 left-0 w-full bg-white/60 dark:bg-neutral-900/95 backdrop-blur-2xl border-t border-black/5 dark:border-white/5 pb-[env(safe-area-inset-bottom)] z-50">
             <div className="flex items-center justify-around px-2 pt-3 pb-2 max-w-md mx-auto">
@@ -13,6 +16,7 @@ export const BottomNav = () => {
                         key={link.path}
                         to={link.path}
                         end={link.isEndPath}
+                        onClick={() => playSound('click')}
                         className={({ isActive }) =>
                             cn(
                                 'flex flex-col items-center justify-center flex-1 py-1 transition-all duration-300 gap-1.5',

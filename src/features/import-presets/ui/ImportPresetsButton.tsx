@@ -1,11 +1,14 @@
 import { Upload } from 'lucide-react'
 import { type FC, useRef } from 'react'
 
+import { useAppSounds } from '@/shared/lib/audio/useAppSounds'
+
 import { useImportPresets } from '../model/useImportPresets'
 
 export const ImportPresetsButton: FC = () => {
     const { importFile, isImporting } = useImportPresets()
     const fileInputRef = useRef<HTMLInputElement>(null)
+    const { playSound } = useAppSounds()
 
     const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const file = e.target.files?.[0]
@@ -29,7 +32,10 @@ export const ImportPresetsButton: FC = () => {
             />
             <button
                 type="button"
-                onClick={() => fileInputRef.current?.click()}
+                onClick={() => {
+                    playSound('click')
+                    fileInputRef.current?.click()
+                }}
                 disabled={isImporting}
                 className="flex items-center gap-2 bg-neutral-900 dark:bg-white text-white dark:text-neutral-900 px-4 py-2 rounded-xl text-sm font-semibold hover:opacity-90 transition-opacity cursor-pointer active:scale-95 disabled:cursor-default disabled:opacity-50"
             >
