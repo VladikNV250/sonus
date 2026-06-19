@@ -2,7 +2,7 @@ import { AnimatePresence, motion } from 'framer-motion'
 import { type FC } from 'react'
 
 import { STRING_LABELS } from '@/entities/pitch'
-import { useAppSounds } from '@/shared/lib/audio/useAppSounds'
+import { Button, Input } from '@/shared/ui'
 
 import { useCreatePreset } from '../model'
 import { StringPitchControl } from './StringPitchControl'
@@ -15,7 +15,6 @@ interface Props {
 export const CreatePresetSheet: FC<Props> = ({ isOpen, onClose }) => {
     const { name, changeName, pitches, updatePitch, reset, errors, isPending, handleSave } =
         useCreatePreset(onClose)
-    const { playSound } = useAppSounds()
 
     return (
         <AnimatePresence>
@@ -26,10 +25,7 @@ export const CreatePresetSheet: FC<Props> = ({ isOpen, onClose }) => {
                         animate={{ opacity: 1 }}
                         exit={{ opacity: 0 }}
                         className="absolute inset-0 bg-black/60 backdrop-blur-sm cursor-default"
-                        onClick={() => {
-                            playSound('click')
-                            onClose()
-                        }}
+                        onClick={onClose}
                     />
 
                     <motion.div
@@ -47,41 +43,39 @@ export const CreatePresetSheet: FC<Props> = ({ isOpen, onClose }) => {
                         </div>
 
                         <div className="flex items-center justify-between px-6 pt-2 pb-4">
-                            <button
-                                type="button"
+                            <Button
+                                variant="ghost"
+                                size="sm"
                                 disabled={isPending}
                                 onClick={() => {
-                                    playSound('click')
                                     onClose()
                                     reset()
                                 }}
-                                className="cursor-pointer disabled:cursor-default text-sm text-neutral-500 dark:text-white/50 hover:text-neutral-900 dark:hover:text-white transition-colors"
+                                className="h-auto text-sm px-0"
                             >
                                 Cancel
-                            </button>
+                            </Button>
                             <h2 className="text-base font-semibold text-neutral-900 dark:text-white tracking-wide">
                                 New Preset
                             </h2>
-                            <button
-                                type="button"
-                                onClick={() => {
-                                    playSound('click')
-                                    handleSave()
-                                }}
+                            <Button
+                                variant="save"
+                                size="sm"
+                                onClick={handleSave}
                                 disabled={isPending}
-                                className="cursor-pointer disabled:cursor-default text-sm font-semibold text-violet-400 disabled:opacity-30 disabled:text-gray-500"
+                                className="h-auto text-sm px-0"
                             >
                                 Save
-                            </button>
+                            </Button>
                         </div>
 
                         <div className="px-6 mb-5">
-                            <input
+                            <Input
                                 type="text"
                                 placeholder="Preset name..."
                                 value={name}
                                 onChange={changeName}
-                                className="w-full bg-black/5 dark:bg-white/5 border border-black/10 dark:border-white/10 rounded-2xl px-4 py-3 text-neutral-900 dark:text-white outline-none focus:border-black/20 dark:focus:border-white/20 transition-all placeholder:text-neutral-500 dark:placeholder:text-white/20"
+                                className="w-full"
                             />
                             {errors?.name && (
                                 <p className="text-red-500 text-sm">{errors.name.join(', ')}</p>
