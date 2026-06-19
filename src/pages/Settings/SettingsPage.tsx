@@ -6,7 +6,7 @@ import { ExportPresetsButton } from '@/features/export-presets'
 import { ImportPresetsButton } from '@/features/import-presets'
 import { type Theme, useTheme } from '@/shared/lib'
 import { useAppSounds } from '@/shared/lib/audio/useAppSounds'
-import { GlassPanel, ListTile, SegmentedControl, Switch } from '@/shared/ui'
+import { GlassPanel, Input, ListTile, SegmentedControl, Switch } from '@/shared/ui'
 
 export const SettingsPage = () => {
     const { theme, setTheme } = useTheme()
@@ -153,12 +153,12 @@ export const SettingsPage = () => {
                             description="Hz value"
                             hasBorder={false}
                             action={
-                                <input
+                                <Input
                                     type="number"
                                     aria-label="Debug frequency in hertz"
                                     value={debugFrequency}
                                     onChange={(e) => setDebugFrequency(Number(e.target.value))}
-                                    className="w-20 bg-black/5 dark:bg-neutral-900/50 text-neutral-900 dark:text-white text-right px-3 py-1.5 rounded-lg border border-black/10 dark:border-white/10 outline-none focus:border-black/30 dark:focus:border-white/30 focus:bg-black/10 dark:focus:bg-neutral-800 transition-colors font-medium"
+                                    className="w-20 rounded-lg px-3 py-1.5 text-right bg-black/5 dark:bg-neutral-900/50 border-black/10 dark:border-white/10 focus:border-black/30 dark:focus:border-white/30 focus:bg-black/10 dark:focus:bg-neutral-800 font-medium"
                                 />
                             }
                         />

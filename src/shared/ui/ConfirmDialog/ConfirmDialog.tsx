@@ -2,7 +2,7 @@ import { AnimatePresence, motion } from 'framer-motion'
 import { Loader2 } from 'lucide-react'
 import { type FC, type ReactNode } from 'react'
 
-import { useAppSounds } from '@/shared/lib/audio/useAppSounds'
+import { Button } from '@/shared/ui'
 
 interface Props {
     isOpen: boolean
@@ -30,7 +30,6 @@ export const ConfirmDialog: FC<Props> = ({
     variant = 'danger',
 }) => {
     const isDanger = variant === 'danger'
-    const { playSound } = useAppSounds()
 
     return (
         <AnimatePresence>
@@ -41,12 +40,7 @@ export const ConfirmDialog: FC<Props> = ({
                         animate={{ opacity: 1 }}
                         exit={{ opacity: 0 }}
                         className="absolute inset-0 bg-black/60 backdrop-blur-sm cursor-default"
-                        onClick={() => {
-                            if (!isPending) {
-                                playSound('click')
-                                onClose()
-                            }
-                        }}
+                        onClick={() => !isPending && onClose()}
                     />
                     <motion.div
                         initial={{ scale: 0.9, opacity: 0, y: 10 }}
@@ -75,36 +69,28 @@ export const ConfirmDialog: FC<Props> = ({
                             {description}
                         </p>
                         <div className="flex w-full gap-3">
-                            <button
-                                type="button"
-                                onClick={() => {
-                                    playSound('click')
-                                    onClose()
-                                }}
+                            <Button
+                                variant="ghost"
+                                size="sm"
+                                onClick={onClose}
                                 disabled={isPending}
-                                className="flex-1 py-3 cursor-pointer rounded-xl bg-black/5 dark:bg-white/5 text-neutral-900 dark:text-white font-medium hover:bg-black/10 dark:hover:bg-white/10 active:scale-95 transition-all disabled:opacity-50"
+                                className="flex-1 py-3 h-auto rounded-xl bg-black/5 dark:bg-white/5 hover:bg-black/10 dark:hover:bg-white/10"
                             >
                                 {cancelText}
-                            </button>
-                            <button
-                                type="button"
-                                onClick={() => {
-                                    playSound('click')
-                                    onConfirm()
-                                }}
+                            </Button>
+                            <Button
+                                variant={isDanger ? 'danger-ghost' : 'ghost'}
+                                size="sm"
+                                onClick={onConfirm}
                                 disabled={isPending}
-                                className={`flex-1 py-3 flex cursor-pointer justify-center items-center rounded-xl font-medium border active:scale-95 transition-all disabled:opacity-50 ${
-                                    isDanger
-                                        ? 'bg-red-500/10 text-red-400 border-red-500/20 hover:bg-red-500/20'
-                                        : 'bg-black/10 dark:bg-white/10 text-neutral-900 dark:text-white border-black/20 dark:border-white/20 hover:bg-black/20 dark:hover:bg-white/20'
-                                }`}
+                                className="flex-1 py-3 h-auto rounded-xl"
                             >
                                 {isPending ? (
                                     <Loader2 className="animate-spin size-5" />
                                 ) : (
                                     confirmText
                                 )}
-                            </button>
+                            </Button>
                         </div>
                     </motion.div>
                 </div>
