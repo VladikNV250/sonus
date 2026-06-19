@@ -1,6 +1,7 @@
 import { Mic } from 'lucide-react'
 import { type FC, useState } from 'react'
 
+import { useAppSounds } from '@/shared/lib/audio/useAppSounds'
 import { Button, GlassPanel } from '@/shared/ui'
 
 interface Props {
@@ -10,6 +11,7 @@ interface Props {
 
 export const StartListeningScreen: FC<Props> = ({ isStarted, start }) => {
     const [isLoading, setIsLoading] = useState(false)
+    const { playSound } = useAppSounds()
 
     if (isStarted) return null
 
@@ -36,7 +38,10 @@ export const StartListeningScreen: FC<Props> = ({ isStarted, start }) => {
                 </p>
                 <Button
                     size="lg"
-                    onClick={() => void handleStart()}
+                    onClick={() => {
+                        playSound('click')
+                        void handleStart()
+                    }}
                     disabled={isLoading}
                     className="w-full shadow-blue-500/20 shadow-xl"
                 >

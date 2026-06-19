@@ -2,6 +2,7 @@ import React from 'react'
 
 import type { Pitch } from '@/entities/pitch'
 import { cn } from '@/shared/lib'
+import { useAppSounds } from '@/shared/lib/audio/useAppSounds'
 
 interface Props {
     pitch: Pitch
@@ -23,10 +24,14 @@ export const StringButton = ({
     position,
 }: Props) => {
     const isActive = stringNumber === selectedString
+    const { playSound } = useAppSounds()
 
     return (
         <button
-            onClick={onSelect}
+            onClick={() => {
+                playSound('click')
+                onSelect()
+            }}
             className={cn(
                 'absolute flex items-center justify-center w-[52px] h-[52px] rounded-full border-[2.5px] transition-all duration-300 bg-white/90 dark:bg-neutral-900/90 backdrop-blur-md cursor-pointer',
                 isActive

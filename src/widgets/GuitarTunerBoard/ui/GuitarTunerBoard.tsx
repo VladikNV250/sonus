@@ -4,6 +4,7 @@ import { type FC, useState } from 'react'
 import { PresetSelector, usePresetSelection } from '@/entities/presets'
 import { CreatePresetSheet } from '@/features/add-custom-preset'
 import { DeletePresetButton } from '@/features/delete-preset'
+import { useAppSounds } from '@/shared/lib/audio/useAppSounds'
 
 import { PresetTuner } from './PresetTuner'
 
@@ -11,6 +12,7 @@ export const GuitarTunerBoard: FC = () => {
     const { presets, isLoading, isError, selectedPreset, setSelectedPresetId } =
         usePresetSelection()
     const [isCreateSheetOpen, setIsCreateSheetOpen] = useState(false)
+    const { playSound } = useAppSounds()
 
     if (isLoading) return <Loader className="animate-spin" />
     if (isError) return <p className="mt-8 text-sm text-red-300">Failed to load presets.</p>
@@ -25,7 +27,10 @@ export const GuitarTunerBoard: FC = () => {
                 />
                 <button
                     type="button"
-                    onClick={() => setIsCreateSheetOpen(true)}
+                    onClick={() => {
+                        playSound('click')
+                        setIsCreateSheetOpen(true)
+                    }}
                     aria-label="Create new preset"
                     className="flex items-center cursor-pointer justify-center w-11 h-11 rounded-2xl bg-black/5 dark:bg-white/5 border border-black/10 dark:border-white/10 text-neutral-500 dark:text-white/60 hover:text-neutral-900 dark:hover:text-white hover:bg-black/10 dark:hover:bg-white/10 hover:border-black/20 dark:hover:border-white/20 active:scale-95 transition-all duration-150"
                 >

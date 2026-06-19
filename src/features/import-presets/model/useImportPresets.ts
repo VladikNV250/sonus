@@ -3,11 +3,13 @@ import { toast } from 'sonner'
 import { z } from 'zod'
 
 import { type Preset, PresetSchema, PresetStore } from '@/entities/presets'
+import { useAppSounds } from '@/shared/lib/audio/useAppSounds'
 
 const ImportSchema = z.array(PresetSchema)
 
 export const useImportPresets = () => {
     const queryClient = useQueryClient()
+    const { playSound } = useAppSounds()
 
     const mutation = useMutation({
         mutationFn: async (file: File) => {
@@ -45,13 +47,16 @@ export const useImportPresets = () => {
             void queryClient.invalidateQueries({ queryKey: ['presets'] })
             if (added === 0) {
                 toast.info('No new presets imported (all were duplicates)')
+                playSound('error')
             } else {
                 toast.success(`Successfully imported ${added} preset(s)`)
+                playSound('success')
             }
         },
         onError: (err) => {
             console.error('Import failed', err)
             toast.error(err instanceof z.ZodError ? 'Invalid preset format' : err.message)
+            playSound('error')
         },
     })
 

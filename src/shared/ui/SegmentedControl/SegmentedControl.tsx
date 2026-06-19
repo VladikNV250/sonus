@@ -1,4 +1,5 @@
 import { cn } from '@/shared/lib'
+import { useAppSounds } from '@/shared/lib/audio/useAppSounds'
 
 import {
     segmentedControlItemVariants,
@@ -19,6 +20,8 @@ export const SegmentedControl = ({
     onChange,
     className,
 }: SegmentedControlProps) => {
+    const { playSound } = useAppSounds()
+
     return (
         <div className={cn(segmentedControlVariants({ className }))}>
             {options.map((option) => {
@@ -27,7 +30,10 @@ export const SegmentedControl = ({
                     <button
                         key={option.value}
                         type="button"
-                        onClick={() => onChange(option.value)}
+                        onClick={() => {
+                            playSound('click')
+                            onChange(option.value)
+                        }}
                         className={cn(segmentedControlItemVariants({ isActive }))}
                     >
                         {isActive && (

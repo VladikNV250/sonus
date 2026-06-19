@@ -2,6 +2,7 @@ import { type ReactNode, useCallback, useEffect, useRef, useState } from 'react'
 import { toast } from 'sonner'
 
 import { pitchProcessorUrl } from '@/core'
+import { useAppSounds } from '@/shared/lib/audio/useAppSounds'
 
 import { AudioContext, DebugAudioContext } from '../model'
 import { useDebugAudio } from '../model/useDebugAudio'
@@ -9,6 +10,7 @@ import { StartListeningScreen } from './StartListeningScreen'
 
 export const AudioProvider = ({ children }: { children: ReactNode }) => {
     const [isStarted, setIsStarted] = useState(false)
+    const { playSound } = useAppSounds()
 
     const audioSourceRef = useRef<MediaStreamAudioSourceNode | null>(null)
     const audioStreamRef = useRef<MediaStream | null>(null)
@@ -108,6 +110,7 @@ export const AudioProvider = ({ children }: { children: ReactNode }) => {
             } else {
                 toast.error('Failed to initialize microphone access.')
             }
+            playSound('error')
         }
     }
 
